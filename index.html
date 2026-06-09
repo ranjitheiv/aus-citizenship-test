@@ -2,129 +2,274 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Australian Citizenship Test Prep</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Citizenship Prep">
+<meta name="theme-color" content="#1d5a51">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Inline SVG favicon + Apple touch icon via canvas -->
+<script>
+(function(){
+  function makeIcon(size){
+    var c=document.createElement('canvas');
+    c.width=size;c.height=size;
+    var ctx=c.getContext('2d');
+    var s=size/64;
+    ctx.fillStyle='#1d5a51';
+    roundRect(ctx,0,0,size,size,size*0.22);
+    ctx.fill();
+    ctx.strokeStyle='rgba(255,255,255,0.18)';
+    ctx.lineWidth=1.2*s;
+    ctx.beginPath();ctx.arc(32*s,32*s,20*s,0,Math.PI*2);ctx.stroke();
+    ctx.beginPath();ctx.ellipse(32*s,32*s,9*s,20*s,0,0,Math.PI*2);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(12*s,32*s);ctx.lineTo(52*s,32*s);ctx.stroke();
+    ctx.strokeStyle='rgba(255,255,255,0.10)';
+    ctx.lineWidth=0.8*s;
+    ctx.beginPath();ctx.moveTo(14*s,22*s);ctx.lineTo(50*s,22*s);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(14*s,42*s);ctx.lineTo(50*s,42*s);ctx.stroke();
+    var branches=[
+      {x1:32,y1:54,x2:32,y2:30,w:2.5,a:0.9},
+      {x1:32,y1:43,x2:21,y2:32,w:2,a:0.75},
+      {x1:32,y1:37,x2:44,y2:26,w:2,a:0.75},
+      {x1:32,y1:31,x2:19,y2:22,w:1.5,a:0.55}
+    ];
+    branches.forEach(function(b){
+      ctx.strokeStyle='rgba(255,255,255,'+b.a+')';
+      ctx.lineWidth=b.w*s;
+      ctx.lineCap='round';
+      ctx.beginPath();ctx.moveTo(b.x1*s,b.y1*s);ctx.lineTo(b.x2*s,b.y2*s);ctx.stroke();
+    });
+    var dots=[
+      {x:32,y:30,r:4},{x:21,y:32,r:3.5},{x:44,y:26,r:3.5},
+      {x:19,y:22,r:3},{x:32,y:22,r:3},{x:40,y:16,r:2.5},{x:25,y:16,r:2.5}
+    ];
+    ctx.fillStyle='#c9a84c';
+    dots.forEach(function(d){
+      ctx.beginPath();ctx.arc(d.x*s,d.y*s,d.r*s,0,Math.PI*2);ctx.fill();
+    });
+    return c.toDataURL('image/png');
+  }
+  function roundRect(ctx,x,y,w,h,r){
+    ctx.beginPath();
+    ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.arcTo(x+w,y,x+w,y+r,r);
+    ctx.lineTo(x+w,y+h-r);ctx.arcTo(x+w,y+h,x+w-r,y+h,r);
+    ctx.lineTo(x+r,y+h);ctx.arcTo(x,y+h,x,y+h-r,r);
+    ctx.lineTo(x,y+r);ctx.arcTo(x,y,x+r,y,r);ctx.closePath();
+  }
+  window.addEventListener('DOMContentLoaded',function(){
+    var lnk=document.createElement('link');
+    lnk.rel='icon';lnk.type='image/png';lnk.href=makeIcon(32);
+    document.head.appendChild(lnk);
+    var apple=document.createElement('link');
+    apple.rel='apple-touch-icon';apple.href=makeIcon(180);
+    document.head.appendChild(apple);
+  });
+})();
+</script>
+
 <style>
 :root {
-  --teal: #2d7a6e;
+  --teal: #1d5a51;
+  --teal-mid: #2d7a6e;
   --teal-light: #3a9180;
-  --teal-dark: #1d5a51;
   --gold: #c9a84c;
   --white: #ffffff;
   --off-white: #f8f6f0;
-  --slate: #2c3440;
+  --slate: #1d2a26;
   --slate-light: #4a5568;
   --slate-lighter: #718096;
   --border: #e2ddd6;
   --success: #2d9e6b;
   --danger: #c0392b;
-  --section-bg: #f5f3ee;
+  --bg: #f5f3ee;
+  --font: 'Outfit', sans-serif;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Source Sans 3', sans-serif; background: var(--off-white); color: var(--slate); min-height: 100vh; font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+body { font-family: var(--font); background: var(--off-white); color: var(--slate); min-height: 100vh; -webkit-font-smoothing: antialiased; }
 
-#topbar { background: var(--teal); color: white; padding: 0 16px; height: 56px; display: flex; align-items: center; gap: 12px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
-#back-btn { background: rgba(255,255,255,0.15); border: none; color: white; border-radius: 8px; padding: 6px 12px; font-size: 14px; cursor: pointer; font-family: 'Source Sans 3', sans-serif; font-weight: 600; display: none; align-items: center; gap: 6px; transition: background 0.2s; }
+/* TOPBAR */
+#topbar { background: var(--teal); color: white; padding: 0 16px; height: 54px; display: flex; align-items: center; gap: 10px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.25); }
+#back-btn { background: rgba(255,255,255,0.14); border: none; color: white; border-radius: 8px; padding: 6px 14px; font-size: 14px; font-weight: 600; font-family: var(--font); cursor: pointer; display: none; align-items: center; gap: 4px; -webkit-tap-highlight-color: transparent; flex-shrink: 0; }
 #back-btn:active { background: rgba(255,255,255,0.25); }
-#topbar-title { font-family: 'Lora', serif; font-size: 17px; font-weight: 700; flex: 1; }
+#topbar-title { font-size: 16px; font-weight: 600; flex: 1; letter-spacing: -0.01em; }
 
-.hero { background: linear-gradient(160deg, var(--teal-dark) 0%, var(--teal) 60%, var(--teal-light) 100%); color: white; padding: 32px 20px 36px; text-align: center; }
-.hero-flag { font-size: 48px; margin-bottom: 12px; }
-.hero h1 { font-family: 'Lora', serif; font-size: 24px; font-weight: 700; line-height: 1.3; margin-bottom: 8px; }
-.hero p { font-size: 14px; opacity: 0.85; max-width: 320px; margin: 0 auto; font-weight: 300; }
+/* HOME HERO — Variant E: side layout */
+.hero {
+  background: var(--teal);
+  padding: 28px 20px 24px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.hero-icon { flex-shrink: 0; }
+.hero-text h1 {
+  font-size: 18px;
+  font-weight: 700;
+  color: white;
+  line-height: 1.3;
+  margin-bottom: 6px;
+  letter-spacing: -0.02em;
+}
+.hero-stats {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.hero-stat {
+  background: rgba(255,255,255,0.12);
+  border-radius: 20px;
+  padding: 3px 10px;
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.85);
+  letter-spacing: 0.01em;
+}
 
-.home-cards { padding: 20px 16px; display: flex; flex-direction: column; gap: 14px; max-width: 480px; margin: 0 auto; }
-.home-card { background: white; border-radius: 16px; padding: 20px; display: flex; align-items: center; gap: 16px; cursor: pointer; border: 2px solid transparent; transition: all 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.06); -webkit-tap-highlight-color: transparent; user-select: none; }
-.home-card:active { transform: scale(0.98); border-color: var(--teal); box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
-.home-card-icon { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
+/* HOME CARDS — 2-col grid */
+.home-cards {
+  padding: 16px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+.home-card {
+  background: white;
+  border-radius: 14px;
+  padding: 16px 14px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all 0.15s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.home-card:active { transform: scale(0.97); border-color: var(--teal-mid); }
+.home-card.wide { grid-column: span 2; flex-direction: row; align-items: center; padding: 14px 16px; }
+.home-card-icon {
+  width: 38px; height: 38px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
 .home-card-icon.learn { background: #e8f4f1; }
 .home-card-icon.study { background: #fef5e4; }
-.home-card-icon.test { background: #fde8e8; }
-.home-card-body h3 { font-family: 'Lora', serif; font-size: 17px; font-weight: 700; color: var(--slate); margin-bottom: 3px; }
-.home-card-body p { font-size: 13px; color: var(--slate-lighter); line-height: 1.4; }
-.home-card-arrow { margin-left: auto; color: var(--teal); font-size: 20px; opacity: 0.5; }
+.home-card-icon.test  { background: #fde8e8; }
+.home-card h3 { font-size: 15px; font-weight: 700; color: var(--slate); letter-spacing: -0.01em; }
+.home-card p { font-size: 12px; color: var(--slate-lighter); line-height: 1.4; font-weight: 400; }
+.home-card.wide h3 { font-size: 14px; }
+.home-card.wide .home-card-icon { margin-right: 2px; }
+.home-card-arrow { margin-left: auto; color: var(--teal-mid); opacity: 0.35; font-size: 18px; flex-shrink: 0; }
 
-.tip-box { background: linear-gradient(135deg, #fff9ed, #fff5e0); border: 1px solid var(--gold); border-radius: 12px; padding: 14px 16px; margin: 0 16px 20px; max-width: 448px; margin-left: auto; margin-right: auto; }
-.tip-box strong { color: var(--gold); font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 4px; }
-.tip-box p { font-size: 13px; color: var(--slate-light); line-height: 1.5; }
+/* TIP BOX */
+.tip-box {
+  background: #fff9ed;
+  border: 1px solid var(--gold);
+  border-radius: 12px;
+  padding: 12px 15px;
+  margin: 0 16px 20px;
+  max-width: 468px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.tip-box strong { color: #9a6e10; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; display: block; margin-bottom: 3px; }
+.tip-box p { font-size: 12px; color: #6b5520; line-height: 1.5; }
 
-.section-screen { display: none; min-height: calc(100vh - 56px); }
+/* SECTION SCREENS */
+.section-screen { display: none; min-height: calc(100vh - 54px); }
 
-.module-list { padding: 16px; display: flex; flex-direction: column; gap: 10px; max-width: 480px; margin: 0 auto; }
-.module-card { background: white; border-radius: 14px; padding: 16px 18px; cursor: pointer; border: 2px solid transparent; transition: all 0.2s; box-shadow: 0 2px 6px rgba(0,0,0,0.05); -webkit-tap-highlight-color: transparent; }
-.module-card:active { border-color: var(--teal); transform: scale(0.98); }
-.module-card-header { display: flex; align-items: center; gap: 12px; }
-.module-number { width: 34px; height: 34px; background: var(--teal); color: white; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; }
-.module-card h3 { font-family: 'Lora', serif; font-size: 15px; font-weight: 700; color: var(--slate); line-height: 1.3; }
-.module-card p { font-size: 12px; color: var(--slate-lighter); margin-top: 4px; margin-left: 46px; }
+/* LEARN */
+.module-list { padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; max-width: 500px; margin: 0 auto; }
+.module-card { background: white; border-radius: 14px; padding: 15px 16px; cursor: pointer; border: 2px solid transparent; transition: all 0.15s; box-shadow: 0 2px 6px rgba(0,0,0,0.05); -webkit-tap-highlight-color: transparent; }
+.module-card:active { border-color: var(--teal-mid); transform: scale(0.98); }
+.module-card-header { display: flex; align-items: center; gap: 11px; }
+.module-number { width: 32px; height: 32px; background: var(--teal); color: white; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+.module-card h3 { font-size: 15px; font-weight: 600; color: var(--slate); letter-spacing: -0.01em; }
+.module-card p { font-size: 12px; color: var(--slate-lighter); margin-top: 4px; margin-left: 43px; line-height: 1.4; }
 
-#module-content { display: none; padding: 0; }
-.module-content-body { max-width: 640px; margin: 0 auto; padding: 20px 16px 40px; }
-.module-content-body h2 { font-family: 'Lora', serif; font-size: 22px; font-weight: 700; color: var(--slate); margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid var(--border); }
-.module-content-body h3 { font-family: 'Lora', serif; font-size: 17px; font-weight: 600; color: var(--teal-dark); margin: 24px 0 10px; }
-.module-content-body p { font-size: 15px; line-height: 1.75; color: var(--slate); margin-bottom: 14px; }
-.module-content-body ul { margin-left: 20px; margin-bottom: 14px; font-size: 15px; line-height: 1.8; }
-.fact-box { background: linear-gradient(135deg, #e8f4f1, #d4ece6); border-left: 4px solid var(--teal); border-radius: 0 10px 10px 0; padding: 14px 16px; margin: 18px 0; }
-.fact-box strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--teal-dark); margin-bottom: 6px; }
-.fact-box p { font-size: 14px; margin: 0; color: var(--slate); line-height: 1.6; }
-.mandatory-box { background: linear-gradient(135deg, #fff5f5, #ffecec); border: 1px solid #e8a0a0; border-radius: 12px; padding: 14px 16px; margin-bottom: 20px; }
-.mandatory-box strong { color: var(--danger); font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 4px; }
-.mandatory-box p { font-size: 13px; color: var(--slate-light); margin: 0; }
-.data-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-.data-table th { background: var(--teal); color: white; padding: 10px 14px; text-align: left; font-weight: 600; font-size: 13px; }
-.data-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: var(--slate); vertical-align: top; }
+/* MODULE CONTENT */
+#module-content { display: none; }
+.module-content-body { max-width: 640px; margin: 0 auto; padding: 20px 16px 48px; }
+.module-content-body h2 { font-size: 20px; font-weight: 700; color: var(--slate); margin-bottom: 18px; padding-bottom: 12px; border-bottom: 2px solid var(--border); letter-spacing: -0.02em; }
+.module-content-body h3 { font-size: 16px; font-weight: 600; color: var(--teal); margin: 22px 0 8px; }
+.module-content-body p { font-size: 14px; line-height: 1.75; color: var(--slate); margin-bottom: 12px; }
+.module-content-body ul { margin: 0 0 14px 18px; font-size: 14px; line-height: 1.8; color: var(--slate); }
+.fact-box { background: #eaf5f1; border-left: 4px solid var(--teal-mid); border-radius: 0 10px 10px 0; padding: 12px 15px; margin: 16px 0; }
+.fact-box strong { display: block; font-size: 10px; text-transform: uppercase; letter-spacing: 0.09em; color: var(--teal); margin-bottom: 5px; font-weight: 700; }
+.fact-box p { font-size: 13px; margin: 0; line-height: 1.65; }
+.mandatory-box { background: #fff5f5; border: 1px solid #f0b0b0; border-radius: 11px; padding: 12px 15px; margin-bottom: 18px; }
+.mandatory-box strong { color: var(--danger); font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 3px; font-weight: 700; }
+.mandatory-box p { font-size: 13px; color: #7a3030; margin: 0; line-height: 1.5; }
+.data-table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 13px; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.data-table th { background: var(--teal); color: white; padding: 9px 13px; text-align: left; font-weight: 600; font-size: 12px; }
+.data-table td { padding: 9px 13px; border-bottom: 1px solid var(--border); color: var(--slate); }
 .data-table tr:last-child td { border-bottom: none; }
 .data-table tr:nth-child(even) td { background: #f9f7f4; }
 
-.study-controls { padding: 14px 16px; background: white; border-bottom: 1px solid var(--border); }
-.filter-row { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; -webkit-overflow-scrolling: touch; }
-.filter-btn { flex-shrink: 0; padding: 7px 14px; border-radius: 20px; border: 2px solid var(--border); background: white; color: var(--slate-light); font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'Source Sans 3', sans-serif; transition: all 0.2s; -webkit-tap-highlight-color: transparent; }
+/* STUDY */
+.study-controls { padding: 12px 16px; background: white; border-bottom: 1px solid var(--border); }
+.filter-row { display: flex; gap: 7px; overflow-x: auto; padding-bottom: 2px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.filter-row::-webkit-scrollbar { display: none; }
+.filter-btn { flex-shrink: 0; padding: 6px 13px; border-radius: 20px; border: 1.5px solid var(--border); background: white; color: var(--slate-light); font-size: 12px; font-weight: 600; cursor: pointer; font-family: var(--font); transition: all 0.15s; -webkit-tap-highlight-color: transparent; }
 .filter-btn.active { background: var(--teal); border-color: var(--teal); color: white; }
-.study-meta { margin-top: 10px; font-size: 13px; color: var(--slate-lighter); display: flex; align-items: center; justify-content: space-between; }
-.shuffle-btn { background: none; border: 1px solid var(--border); border-radius: 8px; padding: 5px 10px; font-size: 12px; color: var(--slate-light); cursor: pointer; font-family: 'Source Sans 3', sans-serif; font-weight: 600; -webkit-tap-highlight-color: transparent; }
-.card-area { padding: 20px 16px; max-width: 480px; margin: 0 auto; }
-.flashcard-wrapper { perspective: 1000px; height: 220px; cursor: pointer; -webkit-tap-highlight-color: transparent; margin-bottom: 20px; }
+.study-meta { margin-top: 9px; font-size: 12px; color: var(--slate-lighter); display: flex; align-items: center; justify-content: space-between; }
+.shuffle-btn { background: none; border: 1px solid var(--border); border-radius: 7px; padding: 4px 10px; font-size: 12px; color: var(--slate-light); cursor: pointer; font-family: var(--font); font-weight: 600; -webkit-tap-highlight-color: transparent; }
+.card-area { padding: 16px 16px 24px; max-width: 500px; margin: 0 auto; }
+.flashcard-wrapper { perspective: 1000px; height: 210px; cursor: pointer; -webkit-tap-highlight-color: transparent; margin-bottom: 18px; }
 .flashcard { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.4s ease; }
 .flashcard.flipped { transform: rotateY(180deg); }
-.card-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: 18px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px 20px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
-.card-front { background: linear-gradient(135deg, var(--teal), var(--teal-dark)); color: white; }
-.card-back { background: white; color: var(--slate); transform: rotateY(180deg); border: 2px solid var(--border); }
-.card-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.7; margin-bottom: 12px; font-weight: 600; }
-.card-front .card-label { color: rgba(255,255,255,0.8); }
-.card-back .card-label { color: var(--teal); }
-.card-text { font-family: 'Lora', serif; font-size: 16px; font-weight: 600; line-height: 1.5; }
-.card-part-badge { position: absolute; top: 12px; right: 14px; font-size: 11px; background: rgba(255,255,255,0.2); padding: 3px 8px; border-radius: 10px; font-weight: 600; color: white; }
-.card-hint { position: absolute; bottom: 12px; font-size: 11px; opacity: 0.5; }
-.card-nav { display: flex; align-items: center; gap: 16px; }
-.nav-btn { flex: 1; padding: 14px; border-radius: 14px; border: 2px solid var(--border); background: white; font-size: 15px; font-weight: 600; cursor: pointer; font-family: 'Source Sans 3', sans-serif; color: var(--slate); transition: all 0.15s; -webkit-tap-highlight-color: transparent; }
+.card-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: 18px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 22px 20px; text-align: center; }
+.card-front { background: var(--teal); }
+.card-back { background: white; transform: rotateY(180deg); border: 2px solid var(--border); }
+.card-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; opacity: 0.65; margin-bottom: 10px; font-weight: 600; }
+.card-front .card-label { color: white; }
+.card-back .card-label { color: var(--teal-mid); }
+.card-text { font-size: 16px; font-weight: 600; line-height: 1.5; letter-spacing: -0.01em; }
+.card-front .card-text { color: white; }
+.card-back .card-text { color: var(--slate); }
+.card-part-badge { position: absolute; top: 11px; right: 13px; font-size: 10px; background: rgba(255,255,255,0.18); padding: 3px 8px; border-radius: 10px; font-weight: 600; color: white; }
+.card-hint { position: absolute; bottom: 11px; font-size: 10px; opacity: 0.45; font-weight: 500; }
+.card-front .card-hint { color: white; }
+.card-back .card-hint { color: var(--slate-lighter); }
+.card-nav { display: flex; align-items: center; gap: 12px; }
+.nav-btn { flex: 1; padding: 13px; border-radius: 12px; border: 1.5px solid var(--border); background: white; font-size: 14px; font-weight: 600; cursor: pointer; font-family: var(--font); color: var(--slate); transition: all 0.15s; -webkit-tap-highlight-color: transparent; }
 .nav-btn:active { background: var(--teal); color: white; border-color: var(--teal); }
-.card-counter { font-size: 14px; color: var(--slate-lighter); font-weight: 600; min-width: 60px; text-align: center; }
+.card-counter { font-size: 13px; color: var(--slate-lighter); font-weight: 600; min-width: 58px; text-align: center; }
 
-.test-setup { padding: 24px 16px; max-width: 480px; margin: 0 auto; }
-.test-setup h2 { font-family: 'Lora', serif; font-size: 22px; font-weight: 700; color: var(--slate); margin-bottom: 8px; }
-.test-setup p { font-size: 14px; color: var(--slate-light); margin-bottom: 20px; line-height: 1.6; }
-.rules-card { background: white; border-radius: 14px; padding: 16px 18px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-.rules-card h3 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--slate-lighter); margin-bottom: 12px; font-weight: 700; }
-.rule-item { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 10px; font-size: 14px; line-height: 1.5; }
-.rule-icon { width: 26px; height: 26px; background: var(--section-bg); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
-.start-btn { width: 100%; padding: 16px; background: var(--teal); color: white; border: none; border-radius: 14px; font-size: 17px; font-weight: 700; font-family: 'Source Sans 3', sans-serif; cursor: pointer; transition: background 0.2s; -webkit-tap-highlight-color: transparent; }
-.start-btn:active { background: var(--teal-dark); }
+/* TEST */
+.test-setup { padding: 22px 16px; max-width: 500px; margin: 0 auto; }
+.test-setup h2 { font-size: 20px; font-weight: 700; color: var(--slate); margin-bottom: 6px; letter-spacing: -0.02em; }
+.test-setup > p { font-size: 13px; color: var(--slate-light); margin-bottom: 18px; line-height: 1.6; }
+.rules-card { background: white; border-radius: 13px; padding: 15px 16px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+.rules-card h3 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--slate-lighter); margin-bottom: 11px; font-weight: 700; }
+.rule-item { display: flex; gap: 11px; align-items: flex-start; margin-bottom: 9px; font-size: 13px; line-height: 1.5; color: var(--slate); }
+.rule-icon { width: 24px; height: 24px; background: var(--bg); border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; }
+.start-btn { width: 100%; padding: 15px; background: var(--teal); color: white; border: none; border-radius: 13px; font-size: 16px; font-weight: 700; font-family: var(--font); cursor: pointer; transition: background 0.15s; -webkit-tap-highlight-color: transparent; letter-spacing: -0.01em; }
+.start-btn:active { background: #163e37; }
 
-#question-screen { display: none; min-height: calc(100vh - 56px); }
-.q-header { padding: 14px 16px; background: white; border-bottom: 1px solid var(--border); }
-.q-progress-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 13px; color: var(--slate-lighter); font-weight: 600; }
-.q-progress-bar { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
-.q-progress-fill { height: 100%; background: var(--teal); border-radius: 2px; transition: width 0.4s ease; }
-.q-part-badge { display: inline-block; background: var(--section-bg); border: 1px solid var(--border); border-radius: 6px; padding: 3px 10px; font-size: 12px; color: var(--slate-light); font-weight: 600; margin-top: 8px; }
-.q-body { padding: 20px 16px; max-width: 480px; margin: 0 auto; }
-.question-text { font-family: 'Lora', serif; font-size: 19px; font-weight: 600; color: var(--slate); line-height: 1.5; margin-bottom: 24px; }
-.options-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
-.option-btn { width: 100%; padding: 15px 16px; background: white; border: 2px solid var(--border); border-radius: 14px; font-size: 15px; color: var(--slate); cursor: pointer; font-family: 'Source Sans 3', sans-serif; text-align: left; line-height: 1.4; transition: all 0.15s; display: flex; align-items: center; gap: 12px; -webkit-tap-highlight-color: transparent; }
-.option-letter { width: 28px; height: 28px; border-radius: 8px; background: var(--section-bg); border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; color: var(--slate-light); transition: all 0.15s; }
-.option-btn:not(.answered):active { border-color: var(--teal); background: #f0faf7; }
+/* QUESTION */
+#question-screen { display: none; min-height: calc(100vh - 54px); }
+.q-header { padding: 13px 16px; background: white; border-bottom: 1px solid var(--border); }
+.q-progress-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 7px; font-size: 12px; color: var(--slate-lighter); font-weight: 600; }
+.q-progress-bar { height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
+.q-progress-fill { height: 100%; background: var(--teal-mid); border-radius: 2px; transition: width 0.35s ease; }
+.q-part-badge { display: inline-block; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 3px 10px; font-size: 11px; color: var(--slate-light); font-weight: 600; margin-top: 7px; }
+.q-body { padding: 18px 16px; max-width: 500px; margin: 0 auto; }
+.question-text { font-size: 18px; font-weight: 600; color: var(--slate); line-height: 1.45; margin-bottom: 20px; letter-spacing: -0.02em; }
+.options-list { display: flex; flex-direction: column; gap: 9px; margin-bottom: 20px; }
+.option-btn { width: 100%; padding: 14px 15px; background: white; border: 1.5px solid var(--border); border-radius: 13px; font-size: 14px; color: var(--slate); cursor: pointer; font-family: var(--font); text-align: left; line-height: 1.4; transition: all 0.12s; display: flex; align-items: center; gap: 11px; -webkit-tap-highlight-color: transparent; }
+.option-letter { width: 26px; height: 26px; border-radius: 7px; background: var(--bg); border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; color: var(--slate-light); transition: all 0.12s; }
+.option-btn:not(.answered):active { border-color: var(--teal-mid); background: #f0faf7; }
 .option-btn.selected-correct { background: #e8f7f0; border-color: var(--success); }
 .option-btn.selected-correct .option-letter { background: var(--success); border-color: var(--success); color: white; }
 .option-btn.selected-wrong { background: #fdecea; border-color: var(--danger); }
@@ -132,43 +277,48 @@ body { font-family: 'Source Sans 3', sans-serif; background: var(--off-white); c
 .option-btn.show-correct { border-color: var(--success); background: #e8f7f0; }
 .option-btn.show-correct .option-letter { background: var(--success); border-color: var(--success); color: white; }
 .option-btn.answered { cursor: default; }
-.feedback-box { background: var(--section-bg); border-radius: 12px; padding: 14px 16px; margin-bottom: 16px; display: none; }
+.feedback-box { border-radius: 11px; padding: 13px 15px; margin-bottom: 14px; display: none; }
 .feedback-box.correct { background: #e8f7f0; border: 1px solid #a0d9bb; }
 .feedback-box.wrong { background: #fdecea; border: 1px solid #f0a0a0; }
-.feedback-label { font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+.feedback-label { font-weight: 700; font-size: 13px; margin-bottom: 3px; }
 .feedback-box.correct .feedback-label { color: var(--success); }
 .feedback-box.wrong .feedback-label { color: var(--danger); }
-.feedback-box p { font-size: 13px; color: var(--slate-light); line-height: 1.5; margin: 0; }
-.next-btn { width: 100%; padding: 15px; background: var(--teal); color: white; border: none; border-radius: 14px; font-size: 16px; font-weight: 700; font-family: 'Source Sans 3', sans-serif; cursor: pointer; display: none; -webkit-tap-highlight-color: transparent; transition: background 0.2s; }
-.next-btn:active { background: var(--teal-dark); }
+.feedback-box p { font-size: 12px; color: var(--slate-light); line-height: 1.5; margin: 0; }
 
-#results-screen { display: none; padding: 24px 16px 40px; max-width: 480px; margin: 0 auto; }
-.result-banner { text-align: center; padding: 28px 20px; border-radius: 18px; margin-bottom: 20px; }
-.result-banner.pass { background: linear-gradient(135deg, #e8f7f0, #d4ece6); border: 2px solid var(--success); }
-.result-banner.fail { background: linear-gradient(135deg, #fdecea, #fad5d2); border: 2px solid var(--danger); }
-.result-icon { font-size: 52px; margin-bottom: 10px; }
-.result-verdict { font-family: 'Lora', serif; font-size: 26px; font-weight: 700; margin-bottom: 6px; }
+/* NAV BUTTONS ROW — next + back through answered */
+.q-nav-row { display: flex; gap: 9px; }
+.q-back-answered { flex-shrink: 0; padding: 14px 16px; background: white; border: 1.5px solid var(--border); border-radius: 13px; font-size: 14px; font-weight: 600; font-family: var(--font); color: var(--slate-light); cursor: pointer; display: none; -webkit-tap-highlight-color: transparent; }
+.q-back-answered:active { background: var(--bg); }
+.next-btn { flex: 1; padding: 14px; background: var(--teal); color: white; border: none; border-radius: 13px; font-size: 15px; font-weight: 700; font-family: var(--font); cursor: pointer; display: none; -webkit-tap-highlight-color: transparent; transition: background 0.15s; }
+.next-btn:active { background: #163e37; }
+
+/* RESULTS */
+#results-screen { display: none; padding: 20px 16px 48px; max-width: 500px; margin: 0 auto; }
+.result-banner { text-align: center; padding: 26px 18px; border-radius: 17px; margin-bottom: 18px; }
+.result-banner.pass { background: #e8f7f0; border: 2px solid var(--success); }
+.result-banner.fail { background: #fdecea; border: 2px solid var(--danger); }
+.result-icon { font-size: 44px; margin-bottom: 8px; }
+.result-verdict { font-size: 28px; font-weight: 700; margin-bottom: 5px; letter-spacing: -0.03em; }
 .result-banner.pass .result-verdict { color: var(--success); }
 .result-banner.fail .result-verdict { color: var(--danger); }
-.result-score { font-size: 15px; color: var(--slate-light); }
-.score-breakdown { background: white; border-radius: 14px; padding: 16px 18px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-.score-breakdown h3 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--slate-lighter); margin-bottom: 12px; font-weight: 700; }
-.score-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
+.result-score { font-size: 14px; color: var(--slate-light); }
+.score-breakdown { background: white; border-radius: 13px; padding: 14px 16px; margin-bottom: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+.score-breakdown h3 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--slate-lighter); margin-bottom: 11px; font-weight: 700; }
+.score-row { display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
 .score-row:last-child { border-bottom: none; }
 .score-row span:last-child { font-weight: 700; }
 .score-green { color: var(--success); }
 .score-red { color: var(--danger); }
-.review-section { background: white; border-radius: 14px; padding: 16px 18px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-.review-section h3 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--slate-lighter); margin-bottom: 12px; font-weight: 700; }
-.review-item { padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
+.review-section { background: white; border-radius: 13px; padding: 14px 16px; margin-bottom: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+.review-section h3 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--slate-lighter); margin-bottom: 11px; font-weight: 700; }
+.review-item { padding: 11px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
 .review-item:last-child { border-bottom: none; }
-.review-q { font-weight: 600; color: var(--slate); margin-bottom: 6px; line-height: 1.4; }
-.review-a { color: var(--slate-light); font-size: 13px; }
+.review-q { font-weight: 600; color: var(--slate); margin-bottom: 5px; line-height: 1.4; }
 .your-ans { display: block; margin-bottom: 2px; }
 .your-ans.wrong { color: var(--danger); }
 .correct-ans { color: var(--success); }
-.retry-btn { width: 100%; padding: 15px; background: var(--teal); color: white; border: none; border-radius: 14px; font-size: 16px; font-weight: 700; font-family: 'Source Sans 3', sans-serif; cursor: pointer; margin-bottom: 10px; -webkit-tap-highlight-color: transparent; }
-.home-btn { width: 100%; padding: 14px; background: white; color: var(--slate); border: 2px solid var(--border); border-radius: 14px; font-size: 15px; font-weight: 600; font-family: 'Source Sans 3', sans-serif; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.retry-btn { width: 100%; padding: 14px; background: var(--teal); color: white; border: none; border-radius: 13px; font-size: 15px; font-weight: 700; font-family: var(--font); cursor: pointer; margin-bottom: 9px; -webkit-tap-highlight-color: transparent; }
+.home-btn { width: 100%; padding: 13px; background: white; color: var(--slate); border: 1.5px solid var(--border); border-radius: 13px; font-size: 14px; font-weight: 600; font-family: var(--font); cursor: pointer; -webkit-tap-highlight-color: transparent; }
 
 #confetti-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 999; display: none; }
 </style>
@@ -178,63 +328,104 @@ body { font-family: 'Source Sans 3', sans-serif; background: var(--off-white); c
 
 <div id="topbar">
   <button id="back-btn" onclick="goBack()">&#8592; Back</button>
-  <span id="topbar-title">&#127462;&#127482; Citizenship Prep</span>
+  <span id="topbar-title">Citizenship Prep</span>
 </div>
 
+<!-- HOME -->
 <div id="home-screen">
   <div class="hero">
-    <div class="hero-flag">&#127462;&#127482;</div>
-    <h1>Australian Citizenship<br>Test Prep</h1>
-    <p>400+ questions &middot; 200+ flashcards &middot; Full exam simulation</p>
+    <div class="hero-icon">
+      <svg width="58" height="58" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="32" cy="32" r="20" stroke="rgba(255,255,255,0.18)" stroke-width="1.2" fill="none"/>
+        <ellipse cx="32" cy="32" rx="9" ry="20" stroke="rgba(255,255,255,0.12)" stroke-width="1" fill="none"/>
+        <line x1="12" y1="32" x2="52" y2="32" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+        <line x1="14" y1="22" x2="50" y2="22" stroke="rgba(255,255,255,0.10)" stroke-width="0.8"/>
+        <line x1="14" y1="42" x2="50" y2="42" stroke="rgba(255,255,255,0.10)" stroke-width="0.8"/>
+        <line x1="32" y1="54" x2="32" y2="30" stroke="rgba(255,255,255,0.9)" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="32" y1="43" x2="21" y2="32" stroke="rgba(255,255,255,0.75)" stroke-width="2" stroke-linecap="round"/>
+        <line x1="32" y1="37" x2="44" y2="26" stroke="rgba(255,255,255,0.75)" stroke-width="2" stroke-linecap="round"/>
+        <line x1="32" y1="31" x2="19" y2="22" stroke="rgba(255,255,255,0.55)" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="32" cy="30" r="4" fill="#c9a84c"/>
+        <circle cx="21" cy="32" r="3.5" fill="#c9a84c"/>
+        <circle cx="44" cy="26" r="3.5" fill="#c9a84c"/>
+        <circle cx="19" cy="22" r="3" fill="#c9a84c"/>
+        <circle cx="32" cy="22" r="3" fill="#c9a84c"/>
+        <circle cx="40" cy="16" r="2.5" fill="#c9a84c"/>
+        <circle cx="25" cy="16" r="2.5" fill="#c9a84c"/>
+      </svg>
+    </div>
+    <div class="hero-text">
+      <h1>Australian Citizenship<br>Test Prep</h1>
+      <div class="hero-stats">
+        <span class="hero-stat">400+ questions</span>
+        <span class="hero-stat">200+ flashcards</span>
+      </div>
+    </div>
   </div>
+
   <div class="home-cards">
     <div class="home-card" onclick="showSection('learn')">
-      <div class="home-card-icon learn">&#128218;</div>
-      <div class="home-card-body"><h3>Learn</h3><p>Study all four parts of Our Common Bond</p></div>
-      <span class="home-card-arrow">&#8250;</span>
+      <div class="home-card-icon learn">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2d7a6e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      </div>
+      <h3>Learn</h3>
+      <p>Study all four OCB parts</p>
     </div>
+
     <div class="home-card" onclick="showSection('study')">
-      <div class="home-card-icon study">&#127183;</div>
-      <div class="home-card-body"><h3>Study</h3><p>200+ flashcards covering every testable fact</p></div>
-      <span class="home-card-arrow">&#8250;</span>
+      <div class="home-card-icon study">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#b08830" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M12 4v16"/></svg>
+      </div>
+      <h3>Study</h3>
+      <p>200+ flashcards by part</p>
     </div>
-    <div class="home-card" onclick="showSection('test')">
-      <div class="home-card-icon test">&#9989;</div>
-      <div class="home-card-body"><h3>Test</h3><p>Full 20-question exam from 400+ question pool</p></div>
+
+    <div class="home-card wide" onclick="showSection('test')">
+      <div class="home-card-icon test">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c0392b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      </div>
+      <div>
+        <h3>Test &mdash; full exam simulation</h3>
+        <p>20 questions from a 400+ pool, real pass conditions</p>
+      </div>
       <span class="home-card-arrow">&#8250;</span>
     </div>
   </div>
+
   <div class="tip-box">
-    <strong>&#11088; The Golden Rule</strong>
-    <p>You must answer <strong>all 5 Australian Values questions correctly</strong> to pass &mdash; regardless of your total score. Study Part 4 thoroughly.</p>
+    <strong>Golden Rule</strong>
+    <p>All 5 Australian Values questions must be answered correctly to pass &mdash; regardless of total score.</p>
   </div>
 </div>
 
+<!-- LEARN -->
 <div id="learn-screen" class="section-screen">
   <div class="module-list">
     <div class="module-card" onclick="showModule(0)">
       <div class="module-card-header"><div class="module-number">1</div><h3>Australia and its People</h3></div>
-      <p>Aboriginal peoples, European settlement, federation, states, territories, national symbols, and special days</p>
+      <p>Aboriginal peoples, settlement, federation, states, territories, symbols, and special days</p>
     </div>
     <div class="module-card" onclick="showModule(1)">
       <div class="module-card-header"><div class="module-number">2</div><h3>Australia's Democratic Beliefs</h3></div>
-      <p>Democracy, rights, freedoms, tolerance, equality, and civic participation</p>
+      <p>Democracy, rights, freedoms, equality, tolerance, and civic milestones</p>
     </div>
     <div class="module-card" onclick="showModule(2)">
       <div class="module-card-header"><div class="module-number">3</div><h3>Government and the Law</h3></div>
-      <p>Parliament, three levels of government, voting, courts, police, and the Constitution</p>
+      <p>Parliament, three levels, voting, courts, police, and the Constitution</p>
     </div>
     <div class="module-card" onclick="showModule(3)">
-      <div class="module-card-header"><div class="module-number">4</div><h3>Australian Values &#11088;</h3></div>
-      <p>Privileges and responsibilities of citizenship, the Pledge, and values &mdash; MANDATORY PASS</p>
+      <div class="module-card-header"><div class="module-number">4</div><h3>Australian Values &#9733;</h3></div>
+      <p>Privileges, responsibilities, the Pledge &mdash; mandatory pass section</p>
     </div>
   </div>
 </div>
 
+<!-- MODULE CONTENT -->
 <div id="module-content">
   <div class="module-content-body" id="module-body"></div>
 </div>
 
+<!-- STUDY -->
 <div id="study-screen" class="section-screen">
   <div class="study-controls">
     <div class="filter-row">
@@ -242,11 +433,11 @@ body { font-family: 'Source Sans 3', sans-serif; background: var(--off-white); c
       <button class="filter-btn" onclick="filterCards(1,this)">Part 1</button>
       <button class="filter-btn" onclick="filterCards(2,this)">Part 2</button>
       <button class="filter-btn" onclick="filterCards(3,this)">Part 3</button>
-      <button class="filter-btn" onclick="filterCards(4,this)">Part 4 &#11088;</button>
+      <button class="filter-btn" onclick="filterCards(4,this)">Part 4 &#9733;</button>
     </div>
     <div class="study-meta">
       <span id="card-count-label">Loading...</span>
-      <button class="shuffle-btn" onclick="shuffleCards()">&#128256; Shuffle</button>
+      <button class="shuffle-btn" onclick="shuffleCards()">Shuffle</button>
     </div>
   </div>
   <div class="card-area">
@@ -273,25 +464,26 @@ body { font-family: 'Source Sans 3', sans-serif; background: var(--off-white); c
   </div>
 </div>
 
+<!-- TEST SETUP -->
 <div id="test-screen" class="section-screen">
   <div class="test-setup" id="test-setup">
     <h2>Practice Test</h2>
-    <p>20 questions drawn randomly from our 400+ question bank, matching the real exam's part distribution of 5 questions per section.</p>
+    <p>20 questions drawn randomly from 400+, with 5 from each of the four parts &mdash; matching the real exam distribution.</p>
     <div class="rules-card">
       <h3>Exam Rules</h3>
-      <div class="rule-item"><div class="rule-icon">&#128203;</div><div>20 multiple-choice questions, 3 options each</div></div>
-      <div class="rule-item"><div class="rule-icon">&#9203;</div><div>45 minutes in the real test (untimed here for study)</div></div>
-      <div class="rule-item"><div class="rule-icon">&#127919;</div><div>75% overall pass mark &mdash; at least 15 out of 20 correct</div></div>
-      <div class="rule-item"><div class="rule-icon">&#9878;</div><div>5 questions from each of the four parts</div></div>
+      <div class="rule-item"><div class="rule-icon">20</div><div>Multiple-choice questions, 3 options each</div></div>
+      <div class="rule-item"><div class="rule-icon">75</div><div>Percent pass mark &mdash; at least 15 out of 20 correct</div></div>
+      <div class="rule-item"><div class="rule-icon">&#8635;</div><div>Every test draws a fresh random selection</div></div>
     </div>
     <div class="mandatory-box">
-      <strong>&#11088; Mandatory: Australian Values</strong>
-      <p>You must answer <strong>all 5 Part 4 (Values) questions correctly</strong>. Even one wrong means an automatic fail regardless of your total score.</p>
+      <strong>&#9733; Mandatory: Australian Values</strong>
+      <p>All 5 Part 4 questions must be answered correctly. One wrong is an automatic fail regardless of total score.</p>
     </div>
     <button class="start-btn" onclick="startTest()">Start Test &#8594;</button>
   </div>
 </div>
 
+<!-- QUESTION -->
 <div id="question-screen">
   <div class="q-header">
     <div class="q-progress-row">
@@ -308,10 +500,14 @@ body { font-family: 'Source Sans 3', sans-serif; background: var(--off-white); c
       <div class="feedback-label" id="feedback-label"></div>
       <p id="feedback-text"></p>
     </div>
-    <button class="next-btn" id="next-btn" onclick="nextQuestion()">Next Question &#8594;</button>
+    <div class="q-nav-row">
+      <button class="q-back-answered" id="q-back-answered" onclick="goBackAnswered()">&#8592; Back</button>
+      <button class="next-btn" id="next-btn" onclick="nextQuestion()">Next &#8594;</button>
+    </div>
   </div>
 </div>
 
+<!-- RESULTS -->
 <div id="results-screen">
   <div class="result-banner" id="result-banner">
     <div class="result-icon" id="result-icon"></div>
@@ -320,14 +516,14 @@ body { font-family: 'Source Sans 3', sans-serif; background: var(--off-white); c
   </div>
   <div class="score-breakdown">
     <h3>Score Breakdown</h3>
-    <div class="score-row"><span>Total score</span><span id="res-total"></span></div>
-    <div class="score-row"><span>Part 1 &ndash; Australia &amp; its People</span><span id="res-p1"></span></div>
-    <div class="score-row"><span>Part 2 &ndash; Democratic Beliefs</span><span id="res-p2"></span></div>
-    <div class="score-row"><span>Part 3 &ndash; Government &amp; Law</span><span id="res-p3"></span></div>
-    <div class="score-row"><span>Part 4 &ndash; Australian Values &#11088;</span><span id="res-p4"></span></div>
+    <div class="score-row"><span>Total</span><span id="res-total"></span></div>
+    <div class="score-row"><span>Part 1 &mdash; Australia &amp; its People</span><span id="res-p1"></span></div>
+    <div class="score-row"><span>Part 2 &mdash; Democratic Beliefs</span><span id="res-p2"></span></div>
+    <div class="score-row"><span>Part 3 &mdash; Government &amp; Law</span><span id="res-p3"></span></div>
+    <div class="score-row"><span>Part 4 &mdash; Australian Values &#9733;</span><span id="res-p4"></span></div>
   </div>
   <div class="review-section" id="review-wrong-section">
-    <h3>Questions to Review</h3>
+    <h3 id="review-heading">Questions to Review</h3>
     <div id="review-wrong-list"></div>
   </div>
   <button class="retry-btn" onclick="retryTest()">Try Another Test &#8594;</button>
@@ -335,116 +531,97 @@ body { font-family: 'Source Sans 3', sans-serif; background: var(--off-white); c
 </div>
 
 <script>
-const moduleContent = [
-  {
-    title:"Part 1",
-    html:`<h2>Part 1: Australia and its People</h2>
+const moduleContent=[
+  {html:`<h2>Part 1: Australia and its People</h2>
 <h3>Aboriginal and Torres Strait Islander Peoples</h3>
-<p>Aboriginal and Torres Strait Islander peoples are Australia's first peoples. They have the oldest continuous cultures in the world, with Aboriginal peoples having lived on the Australian mainland and Tasmania for between 50,000 and 65,000 years.</p>
-<p>Torres Strait Islander peoples are distinct from Aboriginal peoples. They live on islands between the northern tip of Queensland and Papua New Guinea. Both groups are deeply connected to the land, sea, and sky, expressing their beliefs through stories, art, dance, and song.</p>
-<div class="fact-box"><strong>Key Fact</strong><p>Aboriginal and Torres Strait Islander cultures are the oldest continuous cultures in the world. They are a crucial part of Australia's national identity and cultural heritage.</p></div>
+<p>Aboriginal and Torres Strait Islander peoples are Australia's first peoples, with the oldest continuous cultures in the world. Aboriginal peoples have lived on the mainland and Tasmania for between 50,000 and 65,000 years. Torres Strait Islander peoples are distinct and live on islands between the northern tip of Queensland and Papua New Guinea. Both groups express deep connections to the land through stories, art, dance, and song.</p>
+<div class="fact-box"><strong>Key Fact</strong><p>The oldest continuous cultures in the world. A crucial part of Australia's national identity.</p></div>
 <h3>Early European Settlement</h3>
-<p>In 1770, Captain James Cook claimed the east coast of Australia for Great Britain. Britain chose to establish a colony partly because British jails had become overcrowded.</p>
-<p>The First Fleet arrived on 26 January 1788 — eleven ships carrying convicts, marines, and supplies. They landed at Sydney Cove in New South Wales. Captain Arthur Phillip was the first Governor of New South Wales. The colony survived early difficulties and grew as more people arrived.</p>
-<div class="fact-box"><strong>Key Dates</strong><p>1770: Captain Cook claims east coast for Britain<br>1788: First Fleet arrives (26 January) — eleven ships<br>First Governor: Captain Arthur Phillip</p></div>
-<h3>The Nation of Australia</h3>
-<p>Throughout the 1800s, six separate British colonies grew and prospered. Gold rushes in the 1850s brought large numbers from around the world. The colonies agreed to join together, and on 1 January 1901 they united to form the Commonwealth of Australia — a process called Federation. Edmund Barton became Australia's first Prime Minister.</p>
-<div class="fact-box"><strong>Federation</strong><p>Date: 1 January 1901<br>Name: Commonwealth of Australia<br>First Prime Minister: Edmund Barton</p></div>
+<p>In 1770 Captain James Cook claimed the east coast for Britain. To ease overcrowded British jails, the First Fleet arrived on 26 January 1788 &mdash; eleven ships carrying convicts, marines, and supplies &mdash; landing at Sydney Cove, New South Wales. Captain Arthur Phillip was the first Governor of New South Wales.</p>
+<div class="fact-box"><strong>Key Dates</strong><p>1770: Cook claims east coast &nbsp;|&nbsp; 1788: First Fleet arrives (26 Jan) &nbsp;|&nbsp; 11 ships &nbsp;|&nbsp; First Governor: Arthur Phillip</p></div>
+<h3>Federation</h3>
+<p>On 1 January 1901 the six separate colonies united to form the Commonwealth of Australia. Edmund Barton became Australia's first Prime Minister.</p>
 <h3>States and Territories</h3>
 <table class="data-table"><tr><th>State</th><th>Capital</th></tr><tr><td>New South Wales</td><td>Sydney</td></tr><tr><td>Victoria</td><td>Melbourne</td></tr><tr><td>Queensland</td><td>Brisbane</td></tr><tr><td>Western Australia</td><td>Perth</td></tr><tr><td>South Australia</td><td>Adelaide</td></tr><tr><td>Tasmania</td><td>Hobart</td></tr></table>
 <table class="data-table"><tr><th>Territory</th><th>Capital</th></tr><tr><td>Australian Capital Territory (ACT)</td><td>Canberra (national capital)</td></tr><tr><td>Northern Territory</td><td>Darwin</td></tr></table>
 <h3>National Symbols</h3>
-<p>The <strong>Australian National Flag</strong> has three elements: the Union Jack (British heritage), the Commonwealth Star (seven points — six for states, one for territories), and the Southern Cross.</p>
-<p>The <strong>Aboriginal Flag</strong>: black (top half — Aboriginal people), red (bottom half — the earth), yellow circle (the sun).</p>
-<p>The <strong>Torres Strait Islander Flag</strong>: five horizontal stripes (green, black, green, black, green), with a blue centre panel, a white Dhari (headdress) and a white five-pointed star representing the five island groups.</p>
-<p>The <strong>Commonwealth Coat of Arms</strong>: kangaroo and emu (neither walks backwards), a shield with six sections for the states, and a seven-pointed gold star.</p>
-<div class="fact-box"><strong>National Symbols Quick Reference</strong><p>Flower: Golden Wattle | Colours: Green and gold | Gemstone: Opal | Anthem: Advance Australia Fair</p></div>
+<p><strong>Australian National Flag:</strong> Union Jack + Commonwealth Star (7 points: 6 states + territories) + Southern Cross.</p>
+<p><strong>Aboriginal Flag:</strong> Black (top &mdash; Aboriginal people), Red (bottom &mdash; the earth), Yellow circle (the sun).</p>
+<p><strong>Torres Strait Islander Flag:</strong> Five horizontal stripes (green/black/green/black/green), blue centre panel, white Dhari (headdress) and five-pointed star (5 island groups).</p>
+<p><strong>Commonwealth Coat of Arms:</strong> Kangaroo and emu (neither walks backwards), shield with six sections for the states.</p>
+<div class="fact-box"><strong>Quick Reference</strong><p>Flower: Golden Wattle &nbsp;|&nbsp; Colours: Green and gold &nbsp;|&nbsp; Gemstone: Opal &nbsp;|&nbsp; Anthem: Advance Australia Fair</p></div>
 <h3>Special Days</h3>
-<p><strong>Australia Day (26 January)</strong> marks the arrival of the First Fleet in 1788. New citizens are welcomed at citizenship ceremonies across the country.</p>
-<p><strong>Anzac Day (25 April)</strong> commemorates the Anzac soldiers who landed at Gallipoli, Turkey, in 1915. ANZAC stands for Australian and New Zealand Army Corps. Dawn services and marches are held nationwide to remember all who served.</p>`
-  },
-  {
-    title:"Part 2",
-    html:`<h2>Part 2: Australia's Democratic Beliefs, Rights and Liberties</h2>
-<h3>Australian Democracy</h3>
-<p>Australia is a parliamentary democracy. All Australians have a say in how the country is governed by choosing representatives through free elections.</p>
-<p>Democratic milestones: In 1856, Victoria and South Australia introduced the secret ballot — a world first. In 1902, women gained the right to vote federally. In 1962, Aboriginal and Torres Strait Islander peoples gained full voting rights.</p>
-<div class="fact-box"><strong>Democratic Milestones</strong><p>1856: Secret ballot (Victoria and South Australia — world first)<br>1902: Women's federal vote<br>1962: Indigenous Australians' full voting rights</p></div>
+<p><strong>Australia Day (26 January)</strong> marks the First Fleet's arrival in 1788. Citizenship ceremonies welcome new citizens.</p>
+<p><strong>Anzac Day (25 April)</strong> commemorates the Anzac soldiers at Gallipoli, Turkey (1915), and all Australians who served in wars. ANZAC = Australian and New Zealand Army Corps.</p>`},
+  {html:`<h2>Part 2: Australia's Democratic Beliefs, Rights and Liberties</h2>
+<h3>Parliamentary Democracy</h3>
+<p>Australia is a parliamentary democracy &mdash; all Australians choose representatives through free elections. Key milestones: 1856 (Victoria and South Australia introduced the secret ballot &mdash; a world first), 1902 (women gained the federal vote), 1962 (Aboriginal and Torres Strait Islander peoples gained full voting rights).</p>
+<div class="fact-box"><strong>Milestones</strong><p>1856: Secret ballot (world first) &nbsp;|&nbsp; 1902: Women's federal vote &nbsp;|&nbsp; 1962: Indigenous Australians' full voting rights</p></div>
 <h3>Freedom of Speech</h3>
-<p>Australians are free to express their ideas and opinions within the law. Freedom of speech allows people to speak out, write, and broadcast their views, and to criticise the government. Speech that incites violence, hatred, or discrimination is not protected.</p>
+<p>Australians can express ideas and opinions freely within the law, including criticising the government. Speech that incites violence, hatred, or discrimination is not protected.</p>
 <h3>Freedom of Religion</h3>
-<p>Australia is a secular country — government and religion are separate. Australians are free to follow any religion or no religion at all. No official state religion exists. All religions are equal before the law.</p>
+<p>Australia is secular &mdash; no official state religion. Australians can follow any religion or none at all.</p>
 <h3>Freedom of Association</h3>
-<p>Australians are free to join or leave any legal group or organisation, including political parties, unions, and clubs. The government cannot force anyone to join or leave a group.</p>
-<h3>Equality and the Rule of Law</h3>
-<p>Men and women have equal rights in all areas of life. It is illegal to discriminate on grounds of race, gender, disability, religion, or age. All Australians — including the government — must obey the same laws. No one is above the law. People accused of crimes are presumed innocent until proven guilty and have the right to a fair trial and legal representation.</p>
+<p>Australians can join or leave any legal group voluntarily. The government cannot force membership of any organisation.</p>
+<h3>The Rule of Law and Equality</h3>
+<p>All Australians &mdash; including the government &mdash; must obey the same laws. No one is above the law. Men and women have equal rights. Discrimination on grounds of race, gender, disability, or religion is illegal. People accused of crimes are presumed innocent until proven guilty and have the right to a fair trial.</p>
 <h3>Equality of Opportunity</h3>
-<p>Every person deserves a fair chance to succeed through their own talent and effort, regardless of background. This is the "fair go" principle — a core part of Australian identity.</p>`
-  },
-  {
-    title:"Part 3",
-    html:`<h2>Part 3: Government and the Law in Australia</h2>
+<p>The "fair go" &mdash; everyone deserves an equal chance to succeed through talent and effort regardless of background. This is central to Australian identity.</p>`},
+  {html:`<h2>Part 3: Government and the Law in Australia</h2>
 <h3>Three Levels of Government</h3>
-<table class="data-table"><tr><th>Level</th><th>Responsibilities</th></tr><tr><td>Federal</td><td>Defence, foreign affairs, immigration, trade, Medicare, social security, aged care, airports</td></tr><tr><td>State/Territory</td><td>Schools, hospitals, roads, police, public transport, land management</td></tr><tr><td>Local</td><td>Local roads, rubbish, parks, building approvals, local planning</td></tr></table>
+<table class="data-table"><tr><th>Level</th><th>Responsibilities</th></tr><tr><td>Federal</td><td>Defence, foreign affairs, immigration, trade, Medicare, social security, aged care, airports</td></tr><tr><td>State/Territory</td><td>Schools, hospitals, police, roads, public transport, land management</td></tr><tr><td>Local</td><td>Local roads, rubbish, parks, building approvals</td></tr></table>
 <h3>The Australian Constitution</h3>
-<p>The Constitution is the fundamental legal document setting out how Australia is governed. It can only be changed by referendum — a majority of all voters AND at least four of six states must vote yes.</p>
+<p>The fundamental legal document setting out how Australia is governed. Can only be changed by referendum &mdash; a majority of all voters AND at least four of six states must vote yes.</p>
 <h3>The Federal Parliament</h3>
-<p>The Federal Parliament has three parts: the King (represented by the Governor-General), the Senate (upper house, 76 senators — 12 per state, 2 each from ACT and NT), and the House of Representatives (lower house, 151 members). Government is formed by the party with a majority in the House of Representatives.</p>
+<p>Three parts: the King (via Governor-General), the Senate (upper house, 76 senators &mdash; 12 per state, 2 each from ACT and NT), and the House of Representatives (lower house, 151 members). The party with a majority in the House forms government.</p>
 <h3>How Laws Are Made</h3>
-<p>A proposed law is called a Bill. It must pass both the Senate and House of Representatives. The Governor-General then gives Royal Assent, and it becomes an Act of Parliament — a law.</p>
-<h3>Prime Minister and Cabinet</h3>
-<p>The Prime Minister is the leader of the government — the leader of the party or coalition with a majority in the House of Representatives. The Cabinet is made up of senior Ministers who make key decisions about government policy.</p>
-<h3>Governor-General and State Governors</h3>
-<p>The Governor-General represents the King at the federal level. Each state has a Governor representing the King at the state level. They swear in the Prime Minister and other ministers.</p>
+<p>A proposed law is a Bill. It must pass both houses. The Governor-General gives Royal Assent and it becomes an Act of Parliament.</p>
+<h3>Prime Minister, Cabinet, Governor-General</h3>
+<p>The Prime Minister is leader of the party with a majority in the House. Cabinet is senior Ministers making key policy decisions. The Governor-General represents the King at the federal level. Each state has a Governor.</p>
 <h3>Voting</h3>
-<p>Voting in federal and state elections is compulsory for Australian citizens aged 18 and over. House of Representatives elections must be held at least every three years. Senators serve six-year terms. Voting is by secret ballot. The House of Representatives uses preferential voting.</p>
+<p>Compulsory for all citizens aged 18+. House elections must be held at least every 3 years. Senate terms are 6 years. Voting is by secret ballot. The House uses preferential voting.</p>
 <h3>Courts and Police</h3>
-<p>The High Court is Australia's highest court — it interprets the Constitution. State/territory police enforce state laws; the Australian Federal Police enforces federal laws. Australian citizens may be called for jury duty — a civic responsibility to decide guilt or innocence in criminal trials.</p>`
-  },
-  {
-    title:"Part 4",
-    html:`<h2>Part 4: Australian Values</h2>
-<div class="mandatory-box"><strong>&#11088; Mandatory Pass Required</strong><p>You must answer ALL 5 Part 4 questions correctly on the real test. One wrong answer is an automatic fail regardless of total score. Study this section thoroughly.</p></div>
+<p>The High Court is Australia's highest court &mdash; it interprets the Constitution. State/territory police enforce state laws; the Australian Federal Police enforces federal laws. Citizens may be called for jury duty to decide guilt or innocence in criminal trials.</p>`},
+  {html:`<h2>Part 4: Australian Values</h2>
+<div class="mandatory-box"><strong>Mandatory Pass Required</strong><p>All 5 Part 4 questions must be answered correctly on the real test. One wrong is an automatic fail regardless of total score.</p></div>
 <h3>Core Australian Values</h3>
-<p><strong>Respect for the equal worth and dignity of every person.</strong> Every person is treated with respect regardless of background, religion, or beliefs.</p>
-<p><strong>Freedom of speech and expression.</strong> Australians can express opinions freely within the law, including criticising the government.</p>
-<p><strong>Freedom of religion and secular government.</strong> Australia has no official religion. People can practise any religion or none. Government is separate from religion.</p>
-<p><strong>Freedom of association.</strong> Australians can join or leave any legal group.</p>
-<p><strong>Support for parliamentary democracy and the rule of law.</strong> All people — including governments — are subject to the law. Change happens through elections, never through violence.</p>
-<p><strong>Equality of men and women.</strong> Men and women have equal rights in all areas — work, law, and family.</p>
-<p><strong>Equality of opportunity (the "fair go").</strong> Everyone deserves a fair chance to succeed through their own effort and talent, regardless of background.</p>
-<p><strong>Peacefulness.</strong> Disputes are resolved through legal means, never violence. Violence is never acceptable.</p>
-<p><strong>Tolerance, mutual respect, and compassion.</strong> Australians respect each other's differences. Intolerance and discrimination are unacceptable.</p>
+<p><strong>Respect for the equal worth and dignity of every person</strong> &mdash; regardless of background, religion, or beliefs.</p>
+<p><strong>Freedom of speech and expression</strong> &mdash; within the law, including criticising the government.</p>
+<p><strong>Freedom of religion and secular government</strong> &mdash; no official religion; people can practise any faith or none.</p>
+<p><strong>Freedom of association</strong> &mdash; join or leave any legal group.</p>
+<p><strong>Support for parliamentary democracy and the rule of law</strong> &mdash; all people, including governments, are subject to the law. Change happens through elections, never violence.</p>
+<p><strong>Equality of men and women</strong> &mdash; equal rights in work, law, and family.</p>
+<p><strong>Equality of opportunity (the fair go)</strong> &mdash; everyone has a fair chance to succeed through talent and effort.</p>
+<p><strong>Peacefulness</strong> &mdash; disputes resolved through legal means, never violence.</p>
+<p><strong>Tolerance, mutual respect, and compassion</strong> &mdash; differences are respected; discrimination is unacceptable.</p>
 <h3>What is NOT Consistent with Australian Values</h3>
 <ul><li>Using violence or threats to resolve disputes or change laws</li><li>Discrimination based on race, gender, religion, or disability</li><li>Denying equal rights to women</li><li>Forcing anyone into marriage</li><li>Genital mutilation of girls</li><li>Controlling or harming another person</li></ul>
 <h3>Privileges of Australian Citizenship</h3>
-<ul><li>Vote in federal, state, and local government elections</li><li>Apply for an Australian passport</li><li>Apply for jobs in the Australian Public Service or Defence Force</li><li>Register children born overseas as Australian citizens</li><li>Return to Australia freely</li></ul>
+<ul><li>Vote in federal, state, and local elections</li><li>Apply for an Australian passport</li><li>Apply for the Australian Public Service or Defence Force</li><li>Register children born overseas as Australian citizens</li><li>Return to Australia freely</li></ul>
 <h3>Responsibilities of Australian Citizenship</h3>
-<ul><li>Obey Australian laws</li><li>Vote in federal and state/territory elections (compulsory)</li><li>Serve on a jury if called upon</li><li>Defend Australia if required</li><li>Enrol on the electoral roll</li></ul>
+<ul><li>Obey Australian laws</li><li>Vote in federal and state/territory elections (compulsory)</li><li>Serve on a jury if called</li><li>Defend Australia if required</li><li>Enrol on the electoral roll</li></ul>
 <h3>The Australian Citizenship Pledge</h3>
-<p>At a citizenship ceremony, new citizens pledge to: share Australia's democratic beliefs, respect Australia's rights and liberties, and uphold and obey Australian laws.</p>
-<div class="fact-box"><strong>The "Fair Go" Principle</strong><p>The belief that everyone deserves an equal opportunity to succeed through their own effort and talent — regardless of where they came from. It reflects equality, hard work, and opportunity.</p></div>`
-  }
+<p>At the ceremony, new citizens commit to: sharing Australia's democratic beliefs, respecting its rights and liberties, and upholding and obeying its laws.</p>
+<div class="fact-box"><strong>The Fair Go</strong><p>Everyone deserves an equal opportunity to succeed through their own effort and talent &mdash; regardless of where they came from.</p></div>`}
 ];
 
-const allCards = [
-  // PART 1
+const allCards=[
   {part:1,q:"Who are Australia's first peoples?",a:"Aboriginal and Torres Strait Islander peoples"},
   {part:1,q:"How long have Aboriginal peoples lived in Australia?",a:"Between 50,000 and 65,000 years"},
   {part:1,q:"Where do Torres Strait Islander peoples live?",a:"On islands between the northern tip of Queensland and Papua New Guinea"},
   {part:1,q:"How do Aboriginal peoples express their connection to the land?",a:"Through stories, art, dance, and song"},
   {part:1,q:"What makes Aboriginal and Torres Strait Islander cultures unique?",a:"They are the oldest continuous cultures in the world"},
-  {part:1,q:"Which European explorer claimed the east coast of Australia for Britain?",a:"Captain James Cook, in 1770"},
+  {part:1,q:"Which explorer claimed Australia's east coast for Britain?",a:"Captain James Cook, in 1770"},
   {part:1,q:"When did the First Fleet arrive?",a:"26 January 1788"},
   {part:1,q:"How many ships were in the First Fleet?",a:"Eleven ships"},
   {part:1,q:"Where did the First Fleet land?",a:"Sydney Cove, New South Wales"},
   {part:1,q:"Who was the first Governor of New South Wales?",a:"Captain Arthur Phillip"},
   {part:1,q:"Why did Britain send convicts to Australia?",a:"British jails had become overcrowded"},
-  {part:1,q:"What happened on 1 January 1901?",a:"The separate Australian colonies united to form the Commonwealth of Australia (Federation)"},
+  {part:1,q:"What happened on 1 January 1901?",a:"The colonies united to form the Commonwealth of Australia (Federation)"},
   {part:1,q:"Who was Australia's first Prime Minister?",a:"Edmund Barton"},
   {part:1,q:"How many states does Australia have?",a:"Six"},
   {part:1,q:"Name all six Australian states.",a:"New South Wales, Victoria, Queensland, Western Australia, South Australia, Tasmania"},
-  {part:1,q:"What is Australia's national capital?",a:"Canberra (in the Australian Capital Territory)"},
+  {part:1,q:"What is Australia's national capital?",a:"Canberra (Australian Capital Territory)"},
   {part:1,q:"Capital of New South Wales?",a:"Sydney"},
   {part:1,q:"Capital of Victoria?",a:"Melbourne"},
   {part:1,q:"Capital of Queensland?",a:"Brisbane"},
@@ -454,12 +631,12 @@ const allCards = [
   {part:1,q:"Capital of the Northern Territory?",a:"Darwin"},
   {part:1,q:"What are the two mainland self-governing territories?",a:"Australian Capital Territory (ACT) and the Northern Territory"},
   {part:1,q:"What are the three elements of the Australian National Flag?",a:"The Union Jack, the Commonwealth Star, and the Southern Cross"},
-  {part:1,q:"What does the Commonwealth Star represent?",a:"Its seven points represent the six states and the territories"},
-  {part:1,q:"What are the three colours of the Aboriginal Flag?",a:"Black (top), red (bottom), and yellow (centre circle)"},
+  {part:1,q:"What does the Commonwealth Star represent?",a:"Seven points: six for the states, one for the territories"},
+  {part:1,q:"What are the three colours of the Aboriginal Flag?",a:"Black (top), red (bottom), yellow circle (centre)"},
   {part:1,q:"What does the black on the Aboriginal Flag represent?",a:"Aboriginal people"},
   {part:1,q:"What does the red on the Aboriginal Flag represent?",a:"The earth and spiritual connection to the land"},
   {part:1,q:"What does the yellow circle on the Aboriginal Flag represent?",a:"The sun"},
-  {part:1,q:"What symbol appears in the centre of the Torres Strait Islander Flag?",a:"A white Dhari (traditional headdress) and a white five-pointed star"},
+  {part:1,q:"What symbol appears in the centre of the Torres Strait Islander Flag?",a:"A white Dhari (headdress) and a white five-pointed star"},
   {part:1,q:"What does the five-pointed star on the Torres Strait Islander Flag represent?",a:"The five island groups of the Torres Strait"},
   {part:1,q:"What two animals are on the Commonwealth Coat of Arms?",a:"The kangaroo and the emu"},
   {part:1,q:"Why are the kangaroo and emu on the Coat of Arms?",a:"Neither can walk backwards — symbolising Australia always moving forward"},
@@ -474,17 +651,12 @@ const allCards = [
   {part:1,q:"What event brought large numbers to Australia in the 1850s?",a:"Gold rushes"},
   {part:1,q:"What stripes does the Torres Strait Islander Flag have?",a:"Five horizontal stripes: green, black, green, black, green, with a blue centre panel"},
   {part:1,q:"What does the blue on the Torres Strait Islander Flag represent?",a:"The sea"},
-  {part:1,q:"What is the shield on the Commonwealth Coat of Arms divided into?",a:"Six parts representing the six states"},
-  {part:1,q:"What event happens on Australia Day besides public holiday?",a:"Citizenship ceremonies welcoming new Australian citizens"},
+  {part:1,q:"How many points does the Commonwealth Star have?",a:"Seven — six for the states and one for the territories"},
+  {part:1,q:"What event happens at citizenship ceremonies on Australia Day?",a:"New Australian citizens are welcomed"},
   {part:1,q:"What is the process called when the six colonies united in 1901?",a:"Federation"},
-  {part:1,q:"What does the Southern Cross on the flag represent?",a:"Australia's location in the Southern Hemisphere"},
-  {part:1,q:"How many points does the Commonwealth Star have, and why?",a:"Seven — six for the states and one for the territories"},
-
-  // PART 2
   {part:2,q:"What type of government does Australia have?",a:"Parliamentary democracy"},
-  {part:2,q:"What does parliamentary democracy mean?",a:"All Australians choose their representatives through free elections"},
   {part:2,q:"Which states introduced the secret ballot in 1856?",a:"Victoria and South Australia"},
-  {part:2,q:"When did Australian women gain federal voting rights?",a:"1902"},
+  {part:2,q:"When did Australian women gain the federal vote?",a:"1902"},
   {part:2,q:"When did Indigenous Australians gain full voting rights?",a:"1962"},
   {part:2,q:"What is freedom of speech?",a:"The right to express ideas and opinions freely within the law"},
   {part:2,q:"Is all speech protected in Australia?",a:"No — speech inciting violence, hatred, or discrimination is not protected"},
@@ -495,31 +667,25 @@ const allCards = [
   {part:2,q:"What is the presumption of innocence?",a:"A person accused of a crime is considered innocent until proven guilty"},
   {part:2,q:"Is discrimination based on race legal in Australia?",a:"No — it is illegal"},
   {part:2,q:"What is equality of opportunity?",a:"Every person has a fair chance to succeed through talent and effort, regardless of background"},
-  {part:2,q:"What is the 'fair go'?",a:"The belief that everyone deserves an equal chance to succeed"},
-  {part:2,q:"Can the government force you to join an organisation?",a:"No — freedom of association prevents this"},
+  {part:2,q:"What is the 'fair go'?",a:"The belief that everyone deserves an equal chance to succeed through effort and talent"},
   {part:2,q:"What does secular government mean?",a:"Government and religion are kept separate — no official state religion"},
-  {part:2,q:"Can Australians criticise the government?",a:"Yes — freedom of speech protects this right"},
+  {part:2,q:"Can Australians criticise the government?",a:"Yes — freedom of speech protects this"},
   {part:2,q:"What right does a person have if accused of a crime?",a:"The right to a fair trial and legal representation"},
   {part:2,q:"Are men and women equal under Australian law?",a:"Yes — they have equal rights"},
-  {part:2,q:"What values underpin Australian democracy?",a:"Freedom of speech, religion, and association; equality; the rule of law; and tolerance"},
-  {part:2,q:"What was historically significant about Australia's 1856 voting reform?",a:"The secret ballot — a world first"},
   {part:2,q:"What does tolerance mean as a democratic value?",a:"Accepting and respecting people of different backgrounds, cultures, and views"},
-
-  // PART 3
+  {part:2,q:"What was significant about Australia's 1856 voting reform?",a:"The secret ballot — a world first"},
   {part:3,q:"What are the three levels of government?",a:"Federal (Commonwealth), State/Territory, and Local"},
   {part:3,q:"What is the Federal Government responsible for?",a:"Defence, foreign affairs, immigration, trade, Medicare, social security, aged care, and airports"},
   {part:3,q:"What are State/Territory Governments responsible for?",a:"Schools, hospitals, police, roads, public transport, and land management"},
-  {part:3,q:"What are Local Governments responsible for?",a:"Local roads, rubbish collection, parks, building approvals, and local planning"},
+  {part:3,q:"What are Local Governments responsible for?",a:"Local roads, rubbish collection, parks, and building approvals"},
   {part:3,q:"What is the Australian Constitution?",a:"The fundamental legal document setting out how Australia is governed"},
   {part:3,q:"How can the Constitution be changed?",a:"By referendum — a majority of all voters AND at least four of six states must vote yes"},
   {part:3,q:"What are the three parts of the Federal Parliament?",a:"The King (via Governor-General), the Senate, and the House of Representatives"},
-  {part:3,q:"What is the Senate?",a:"The upper house of Federal Parliament, with 76 senators"},
   {part:3,q:"How many senators are there?",a:"76 — 12 per state, 2 each from ACT and NT"},
-  {part:3,q:"What is the House of Representatives?",a:"The lower house of Federal Parliament, with 151 elected members"},
+  {part:3,q:"How many members does the House of Representatives have?",a:"151 elected members"},
   {part:3,q:"How is government formed?",a:"The party or coalition with a majority in the House of Representatives forms government"},
   {part:3,q:"What is a Bill?",a:"A proposed law that must pass both houses before becoming law"},
   {part:3,q:"What happens after a Bill passes both houses?",a:"The Governor-General gives Royal Assent and it becomes an Act of Parliament"},
-  {part:3,q:"Who is the Prime Minister?",a:"The leader of the party with a majority in the House of Representatives"},
   {part:3,q:"What is the Cabinet?",a:"Senior Ministers who make key decisions about government policy"},
   {part:3,q:"Who is the Governor-General?",a:"The King's representative at the federal level"},
   {part:3,q:"Who represents the King in each state?",a:"A Governor"},
@@ -530,145 +696,116 @@ const allCards = [
   {part:3,q:"What is the High Court of Australia?",a:"The highest court — responsible for interpreting the Constitution"},
   {part:3,q:"What does the Australian Federal Police do?",a:"Enforces federal laws"},
   {part:3,q:"What is jury duty?",a:"A civic responsibility where citizens decide guilt or innocence in criminal trials"},
-  {part:3,q:"Who enforces state and territory laws?",a:"State and territory police forces"},
-  {part:3,q:"What is an Act of Parliament?",a:"A law that has passed both houses and received Royal Assent"},
   {part:3,q:"What is a referendum?",a:"A national vote to decide whether to change the Constitution"},
-  {part:3,q:"What does the court system do?",a:"Interprets and applies the law, independently of the government"},
-  {part:3,q:"How many senators does each state have?",a:"12"},
+  {part:3,q:"How many states must vote yes to change the Constitution?",a:"At least four of the six states"},
+  {part:3,q:"What does Royal Assent mean?",a:"The Governor-General's approval that turns a Bill into law"},
   {part:3,q:"Which level of government handles immigration?",a:"Federal government"},
   {part:3,q:"Which level of government handles Medicare?",a:"Federal government"},
-  {part:3,q:"How many states must vote yes to change the Constitution?",a:"At least four of the six states"},
-  {part:3,q:"Who appoints the Prime Minister?",a:"The Governor-General"},
-  {part:3,q:"What does 'Royal Assent' mean?",a:"The Governor-General's approval that turns a Bill into law"},
-
-  // PART 4
-  {part:4,q:"Is violence ever acceptable to resolve disputes in Australia?",a:"No — peacefulness is a core value. Disputes are resolved through legal and democratic means only."},
+  {part:4,q:"Is violence ever acceptable to resolve disputes in Australia?",a:"No — disputes are resolved through legal and democratic means only"},
   {part:4,q:"What does equality of men and women mean in Australia?",a:"Men and women have equal rights in all areas — work, law, and family"},
   {part:4,q:"What does 'equality of opportunity' mean?",a:"Everyone gets a fair chance to succeed through talent and effort, regardless of background"},
   {part:4,q:"Is forcing a child into marriage consistent with Australian values?",a:"No — this is contrary to Australian values and illegal"},
   {part:4,q:"Can Australians practise any religion?",a:"Yes — freedom of religion is a core Australian value"},
-  {part:4,q:"What is a privilege of Australian citizenship (not available to permanent residents)?",a:"Applying for an Australian passport, voting in elections, and applying for the Public Service or Defence Force"},
-  {part:4,q:"What are the responsibilities of Australian citizenship?",a:"Obeying laws, voting in elections, serving on a jury if called, and defending Australia if required"},
+  {part:4,q:"What is a privilege of Australian citizenship?",a:"Voting in elections, applying for a passport, working in the Public Service or Defence Force"},
+  {part:4,q:"What are the responsibilities of Australian citizenship?",a:"Obeying laws, voting in elections, serving on a jury if called, defending Australia if required"},
   {part:4,q:"What does the Australian Citizenship Pledge commit new citizens to?",a:"Sharing democratic beliefs, respecting rights and liberties, and upholding Australian laws"},
-  {part:4,q:"What is the 'fair go'?",a:"The belief that everyone deserves an equal opportunity to succeed — a core Australian value"},
-  {part:4,q:"Is it acceptable to deny a person equal rights because of their religion?",a:"No — this is contrary to Australian values and may be illegal"},
+  {part:4,q:"What is the 'fair go'?",a:"Everyone deserves an equal opportunity to succeed through their own effort — a core Australian value"},
+  {part:4,q:"Is it acceptable to deny a person equal rights based on their religion?",a:"No — contrary to Australian values and may be illegal"},
   {part:4,q:"What does supporting the rule of law mean?",a:"All people — including governments — must obey the law equally"},
-  {part:4,q:"What privilege do citizens have that permanent residents do not regarding voting?",a:"Citizens must vote in federal and state elections; permanent residents cannot vote"},
   {part:4,q:"Is jury duty a right or a responsibility?",a:"A responsibility — citizens must serve if called"},
   {part:4,q:"What is tolerance as an Australian value?",a:"Accepting and respecting people of different backgrounds, cultures, and religions"},
-  {part:4,q:"Can Australian citizens apply to work in the Australian Public Service?",a:"Yes — this is a privilege of citizenship"},
   {part:4,q:"What does compassion mean as an Australian value?",a:"Caring about the wellbeing of others, especially those who are disadvantaged"},
   {part:4,q:"What is the Citizenship Pledge ceremony?",a:"A public commitment to Australia and its values, marking the moment a person becomes a citizen"},
-  {part:4,q:"Which of these is NOT consistent with Australian values: joining a club, using violence to change a law, or criticising the government?",a:"Using violence to change a law is NOT consistent with Australian values"},
-  {part:4,q:"What does mutual respect mean?",a:"Treating others with consideration regardless of differences in background or beliefs"},
-  {part:4,q:"Is genital mutilation of girls acceptable in Australia?",a:"No — it is contrary to Australian values and illegal"},
-  {part:4,q:"What does freedom of expression include?",a:"Expressing views, accessing information, and criticising the government within the law"},
+  {part:4,q:"Is genital mutilation of girls consistent with Australian values?",a:"No — it is contrary to Australian values and illegal"},
   {part:4,q:"Does the law apply equally to everyone in Australia?",a:"Yes — including the government. No one is above the law."},
-  {part:4,q:"What does secular government mean for religious Australians?",a:"They are free to practise their religion without government interference"},
   {part:4,q:"Can a citizen register a child born overseas as Australian?",a:"Yes — this is a privilege of citizenship"},
   {part:4,q:"How must disputes be resolved in Australia?",a:"Peacefully — through legal means and democratic processes, never through violence"},
+  {part:4,q:"What does freedom of expression include?",a:"Expressing views, accessing information, and criticising the government within the law"},
+  {part:4,q:"What does secular government mean for religious Australians?",a:"They are free to practise their religion without government interference"},
+  {part:4,q:"Can Australian citizens apply to work in the Australian Public Service?",a:"Yes — this is a privilege of citizenship"},
+  {part:4,q:"What does mutual respect mean?",a:"Treating others with consideration regardless of differences in background or beliefs"},
+  {part:4,q:"Which is NOT consistent with Australian values: joining a club, using violence to change a law, or criticising the government?",a:"Using violence to change a law"},
+  {part:4,q:"What does the Citizenship Pledge ask citizens to share?",a:"Australia's democratic beliefs, and to respect its rights and liberties and uphold its laws"}
 ];
 
-const questionBank = [
-  // PART 1
+const questionBank=[
   {part:1,q:"Which group is recognised as Australia's first peoples?",opts:["European settlers","Aboriginal and Torres Strait Islander peoples","Pacific Islanders"],ans:1},
-  {part:1,q:"Approximately how long ago did Aboriginal peoples arrive in Australia?",opts:["50,000 to 65,000 years ago","20,000 years ago","70,000 to 80,000 years ago"],ans:0},
+  {part:1,q:"How long have Aboriginal peoples lived in Australia?",opts:["50,000 to 65,000 years ago","20,000 years ago","70,000 to 80,000 years ago"],ans:0},
   {part:1,q:"Where do Torres Strait Islander peoples live?",opts:["On islands between northern Queensland and Papua New Guinea","In the southern regions of Australia","On mainland Australia and Tasmania"],ans:0},
-  {part:1,q:"How do Aboriginal and Torres Strait Islander peoples express their connection to the land?",opts:["Through statistical reports","Through art, dance, and storytelling","Through formal written literature only"],ans:1},
-  {part:1,q:"What distinguishes Torres Strait Islander peoples from Aboriginal peoples?",opts:["They inhabit mainland Australia and Tasmania","They emerged only in the 21st century","They live on islands between northern Queensland and Papua New Guinea"],ans:2},
+  {part:1,q:"How do Aboriginal peoples express their connection to the land?",opts:["Through statistical reports","Through art, dance, and storytelling","Through formal written literature only"],ans:1},
   {part:1,q:"When did the First Fleet arrive in Australia?",opts:["26 January 1770","26 January 1788","1 January 1800"],ans:1},
   {part:1,q:"How many ships made up the First Fleet?",opts:["Ten ships","Eleven ships","Twelve ships"],ans:1},
   {part:1,q:"Who was the first Governor of New South Wales?",opts:["Captain James Cook","Captain Arthur Phillip","Edmund Barton"],ans:1},
   {part:1,q:"Which explorer claimed the east coast of Australia for Britain in 1770?",opts:["Captain Arthur Phillip","Captain James Cook","Abel Tasman"],ans:1},
   {part:1,q:"Why did the British Government send convicts to Australia?",opts:["To help Aboriginal peoples","To manage overcrowded British jails","To search for gold"],ans:1},
-  {part:1,q:"What was the name of the first colony established by the First Fleet?",opts:["Victoria","Tasmania","New South Wales"],ans:2},
-  {part:1,q:"What happened on 1 January 1901?",opts:["The colonies united to form the Commonwealth of Australia","The Australian Constitution was first written","The First Fleet arrived from Great Britain"],ans:0},
+  {part:1,q:"What happened on 1 January 1901?",opts:["The colonies united to form the Commonwealth of Australia","The Constitution was first written","The First Fleet arrived from Great Britain"],ans:0},
   {part:1,q:"Who was Australia's first Prime Minister?",opts:["Captain Arthur Phillip","John Howard","Edmund Barton"],ans:2},
   {part:1,q:"How many states does Australia have?",opts:["Eight","Six","Five"],ans:1},
   {part:1,q:"What is the capital city of Australia?",opts:["Sydney","Melbourne","Canberra"],ans:2},
-  {part:1,q:"What is the capital city of New South Wales?",opts:["Melbourne","Sydney","Canberra"],ans:1},
-  {part:1,q:"What is the capital city of Victoria?",opts:["Melbourne","Sydney","Adelaide"],ans:0},
-  {part:1,q:"What is the capital city of Queensland?",opts:["Brisbane","Darwin","Townsville"],ans:0},
-  {part:1,q:"What is the capital city of Western Australia?",opts:["Adelaide","Darwin","Perth"],ans:2},
-  {part:1,q:"What is the capital city of South Australia?",opts:["Adelaide","Hobart","Perth"],ans:0},
-  {part:1,q:"What is the capital city of Tasmania?",opts:["Launceston","Darwin","Hobart"],ans:2},
+  {part:1,q:"What is the capital of New South Wales?",opts:["Melbourne","Sydney","Canberra"],ans:1},
+  {part:1,q:"What is the capital of Victoria?",opts:["Melbourne","Sydney","Adelaide"],ans:0},
+  {part:1,q:"What is the capital of Queensland?",opts:["Brisbane","Darwin","Townsville"],ans:0},
+  {part:1,q:"What is the capital of Western Australia?",opts:["Adelaide","Darwin","Perth"],ans:2},
+  {part:1,q:"What is the capital of South Australia?",opts:["Adelaide","Hobart","Perth"],ans:0},
+  {part:1,q:"What is the capital of Tasmania?",opts:["Launceston","Darwin","Hobart"],ans:2},
   {part:1,q:"What is the capital of the Northern Territory?",opts:["Darwin","Alice Springs","Canberra"],ans:0},
-  {part:1,q:"Which territory contains Australia's national capital?",opts:["Victoria","Northern Territory","Australian Capital Territory"],ans:2},
   {part:1,q:"What are the three elements of the Australian National Flag?",opts:["The Union Jack, the Commonwealth Star, and the Southern Cross","The Southern Cross, the kangaroo, and the emu","The Union Jack, the golden wattle, and the Southern Cross"],ans:0},
-  {part:1,q:"What does the Commonwealth Star on the Australian flag represent?",opts:["The seven seas around Australia","The six states and the territories","The original seven colonies"],ans:1},
   {part:1,q:"How many points does the Commonwealth Star have?",opts:["Five","Six","Seven"],ans:2},
   {part:1,q:"What are the colours of the Aboriginal Flag?",opts:["Red, white, and blue","Black, red, and yellow","Green, white, and blue"],ans:1},
   {part:1,q:"What does the black on the Aboriginal Flag represent?",opts:["The night sky","Aboriginal people","The earth"],ans:1},
   {part:1,q:"What does the red on the Aboriginal Flag represent?",opts:["The blood of war","The earth and spiritual connection to the land","Danger"],ans:1},
   {part:1,q:"What does the yellow circle on the Aboriginal Flag represent?",opts:["The moon","The sun","Gold"],ans:1},
   {part:1,q:"What symbol appears in the centre of the Torres Strait Islander Flag?",opts:["A golden wattle","A Dhari (headdress) and a five-pointed star","The Southern Cross"],ans:1},
-  {part:1,q:"What does the five-pointed star on the Torres Strait Islander Flag represent?",opts:["The five states","The five island groups of the Torres Strait","The five founding fathers"],ans:1},
   {part:1,q:"Which two animals appear on the Commonwealth Coat of Arms?",opts:["The koala and the platypus","The kangaroo and the emu","The kangaroo and the koala"],ans:1},
-  {part:1,q:"Why are the kangaroo and emu used on the Coat of Arms?",opts:["They are the largest Australian animals","Neither can walk backwards, representing forward progress","They are the most globally recognisable Australian animals"],ans:1},
+  {part:1,q:"Why are the kangaroo and emu on the Coat of Arms?",opts:["They are the largest Australian animals","Neither can walk backwards, representing forward progress","They are the most recognisable Australian animals"],ans:1},
   {part:1,q:"What is Australia's national flower?",opts:["Waratah","Banksia","Golden Wattle"],ans:2},
   {part:1,q:"What are Australia's national colours?",opts:["Red and blue","Green and gold","Blue and white"],ans:1},
   {part:1,q:"What is Australia's national gemstone?",opts:["Diamond","Sapphire","Opal"],ans:2},
   {part:1,q:"What is Australia's national anthem?",opts:["God Save the King","Waltzing Matilda","Advance Australia Fair"],ans:2},
-  {part:1,q:"What does Australia Day mark?",opts:["The day Australia became a republic","The arrival of the First Fleet on 26 January 1788","The birth of the first Prime Minister"],ans:1},
-  {part:1,q:"When is Australia Day?",opts:["1 January","26 January","25 April"],ans:1},
-  {part:1,q:"What does Anzac Day commemorate?",opts:["The First Fleet's arrival","The discovery of gold","The Anzac soldiers at Gallipoli and all Australians who served in wars"],ans:2},
+  {part:1,q:"What does Australia Day (26 January) mark?",opts:["The day Australia became a republic","The arrival of the First Fleet on 26 January 1788","The birth of the first Prime Minister"],ans:1},
+  {part:1,q:"What does Anzac Day commemorate?",opts:["The First Fleet's arrival","The discovery of gold","The Anzac soldiers at Gallipoli and all Australians who served"],ans:2},
   {part:1,q:"When is Anzac Day?",opts:["26 January","1 January","25 April"],ans:2},
   {part:1,q:"Where did Anzac soldiers land in 1915?",opts:["France","Egypt","Gallipoli, Turkey"],ans:2},
   {part:1,q:"What does ANZAC stand for?",opts:["Australian New Zealanders Army Corps","Australian and New Zealand Army Corps","Allied Nations Zealot Army Command"],ans:1},
-  {part:1,q:"What event brought large numbers of people to Australia in the 1850s?",opts:["World War I","Gold rushes","The arrival of the Second Fleet"],ans:1},
+  {part:1,q:"What event brought large numbers to Australia in the 1850s?",opts:["World War I","Gold rushes","The arrival of a second fleet"],ans:1},
   {part:1,q:"What stripes does the Torres Strait Islander Flag have?",opts:["Three horizontal stripes","Five horizontal stripes (green, black, green, black, green)","Two vertical stripes"],ans:1},
-  {part:1,q:"What colour on the Torres Strait Islander Flag represents the sea?",opts:["Green","Black","Blue"],ans:2},
-  {part:1,q:"At what event are new citizens welcomed on Australia Day?",opts:["Grand Finals","Citizenship ceremonies","Anzac parades"],ans:1},
   {part:1,q:"How are Aboriginal and Torres Strait Islander cultures described in the OCB?",opts:["Among the oldest in Asia","The oldest continuous cultures in the world","The most technologically advanced cultures"],ans:1},
   {part:1,q:"How many mainland self-governing territories does Australia have?",opts:["One","Two","Three"],ans:1},
-  {part:1,q:"What does the Southern Cross on the Australian flag represent?",opts:["The island territories","Australia's location in the Southern Hemisphere","The six states"],ans:1},
-  {part:1,q:"What was the process called when the six colonies joined together in 1901?",opts:["Unification","Federation","Confederation"],ans:1},
-  {part:1,q:"Where did the First Fleet establish its colony?",opts:["Botany Bay","Melbourne Harbour","Sydney Cove"],ans:0},
-
-  // PART 2
+  {part:1,q:"What was the process called when the six colonies joined in 1901?",opts:["Unification","Federation","Confederation"],ans:1},
   {part:2,q:"What system of government does Australia have?",opts:["Military dictatorship","Parliamentary democracy","Socialist republic"],ans:1},
   {part:2,q:"Which states first introduced the secret ballot in 1856?",opts:["New South Wales and Queensland","Victoria and South Australia","Western Australia and Tasmania"],ans:1},
-  {part:2,q:"When did Australian women gain the right to vote in federal elections?",opts:["1856","1902","1962"],ans:1},
+  {part:2,q:"When did Australian women gain the right to vote federally?",opts:["1856","1902","1962"],ans:1},
   {part:2,q:"When did Aboriginal and Torres Strait Islander peoples gain the right to vote federally?",opts:["1902","1945","1962"],ans:2},
   {part:2,q:"What does freedom of speech allow Australians to do?",opts:["Say anything without restriction","Express ideas and opinions within the law","Only speak positively about the government"],ans:1},
   {part:2,q:"Is speech that incites violence protected in Australia?",opts:["Yes, always","No, it is not protected","Only if it is political speech"],ans:1},
   {part:2,q:"What does freedom of religion mean in Australia?",opts:["You must follow the national religion","You can follow any religion or no religion","You must register your religion with the government"],ans:1},
   {part:2,q:"Does Australia have an official state religion?",opts:["Yes, Christianity","Yes, a mix of religions","No, Australia is a secular country"],ans:2},
-  {part:2,q:"What does freedom of association allow Australians to do?",opts:["Join or leave any legal group voluntarily","Only join groups approved by the government","Must join a union to work"],ans:0},
+  {part:2,q:"What does freedom of association allow?",opts:["Join or leave any legal group voluntarily","Only join groups approved by the government","Must join a union to work"],ans:0},
   {part:2,q:"What does the Rule of Law mean?",opts:["The Prime Minister can change any law","All Australians including the government must obey the same laws","Laws only apply to non-citizens"],ans:1},
-  {part:2,q:"What does 'presumed innocent until proven guilty' mean?",opts:["Everyone is guilty unless they prove otherwise","A person accused of a crime is innocent until a court decides otherwise","Police can arrest anyone at any time"],ans:1},
+  {part:2,q:"What does 'presumed innocent until proven guilty' mean?",opts:["Everyone is guilty unless they prove otherwise","A person accused is innocent until a court decides otherwise","Police can arrest anyone at any time"],ans:1},
   {part:2,q:"Is discrimination based on race illegal in Australia?",opts:["No, it is acceptable in some circumstances","Yes, it is illegal","Only in the workplace"],ans:1},
-  {part:2,q:"What does equality of opportunity mean?",opts:["Everyone earns the same salary","What a person achieves depends on talent and effort regardless of background","The government chooses your job based on your birthplace"],ans:1},
-  {part:2,q:"Can the Australian government force you to join a political party?",opts:["Yes, if in the national interest","No, freedom of association prevents this","Only during elections"],ans:1},
+  {part:2,q:"What does equality of opportunity mean?",opts:["Everyone earns the same salary","What a person achieves depends on talent and effort regardless of background","The government chooses your job based on birthplace"],ans:1},
   {part:2,q:"What was historically significant about Australia's 1856 voting reform?",opts:["Universal suffrage for all","Introduction of the secret ballot, a world first","Lowering the voting age to 16"],ans:1},
   {part:2,q:"What does secular government mean?",opts:["The government promotes one major religion","Government and religion are kept separate","The government funds all religions equally"],ans:1},
-  {part:2,q:"Can Australians criticise the government?",opts:["No, this is illegal","Yes, this is protected by freedom of speech","Only in writing"],ans:1},
-  {part:2,q:"What right does a person have if accused of a crime?",opts:["No rights — the government decides","The right to a fair trial and legal representation","Only the right to remain silent"],ans:1},
-  {part:2,q:"What does Australia's multicultural society value?",opts:["That everyone adopts the same culture","Cultural diversity while sharing common values and obligations","Rejecting foreign cultural influences"],ans:1},
+  {part:2,q:"Can Australians criticise the government?",opts:["No, this is illegal","Yes, protected by freedom of speech","Only in writing"],ans:1},
   {part:2,q:"Are men and women equal under Australian law?",opts:["No, men have more legal rights","Only if they are citizens","Yes, men and women are equal under Australian law"],ans:2},
-  {part:2,q:"What does 'tolerance' mean as a democratic value?",opts:["Everyone must think the same way","Ignoring the law when you disagree","Accepting and respecting people of different backgrounds and views"],ans:2},
   {part:2,q:"What is the 'fair go' principle?",opts:["Everyone receives the same amount of money","Everyone deserves an equal chance to succeed through effort and talent","The government provides work for everyone"],ans:1},
   {part:2,q:"What does 'no one is above the law' mean?",opts:["Only politicians are above the law","The law applies equally to every person including the government","Citizens are above the law in minor matters"],ans:1},
-
-  // PART 3
   {part:3,q:"What are the three levels of government in Australia?",opts:["Federal, National, and Global","Federal, State/Territory, and Local","Parliamentary, Judicial, and Executive"],ans:1},
   {part:3,q:"Which level of government is responsible for defence?",opts:["State government","Local government","Federal government"],ans:2},
   {part:3,q:"Which level of government runs hospitals and schools?",opts:["Federal government","Local government","State and territory governments"],ans:2},
   {part:3,q:"Which level of government handles rubbish collection?",opts:["Federal government","Local government","State government"],ans:1},
   {part:3,q:"What is the Australian Constitution?",opts:["A guide to citizenship","The fundamental legal document setting out how Australia is governed","A list of Australian values"],ans:1},
   {part:3,q:"How is the Australian Constitution changed?",opts:["By a vote in Parliament only","By a majority of voters and a majority of states in a referendum","By the Prime Minister issuing a decree"],ans:1},
-  {part:3,q:"How many states must vote yes in a referendum to change the Constitution?",opts:["All six states","At least four of six states","Any three states"],ans:1},
+  {part:3,q:"How many states must vote yes in a referendum?",opts:["All six states","At least four of six states","Any three states"],ans:1},
   {part:3,q:"What are the three parts of the Federal Parliament?",opts:["The Prime Minister, Senate, and High Court","The King, Senate, and House of Representatives","The Governor-General, Cabinet, and Senate"],ans:1},
-  {part:3,q:"What is the Senate?",opts:["The lower house of Parliament","The upper house of Parliament","The Prime Minister's advisory body"],ans:1},
   {part:3,q:"How many senators does Australia have in total?",opts:["76","100","50"],ans:0},
   {part:3,q:"How many senators does each state have?",opts:["Ten","Twelve","Six"],ans:1},
-  {part:3,q:"What is the House of Representatives?",opts:["The upper house of Federal Parliament","The lower house of Federal Parliament","The state governments' meeting place"],ans:1},
   {part:3,q:"How many members does the House of Representatives have?",opts:["76","200","151"],ans:2},
-  {part:3,q:"Who forms government?",opts:["The party with most Senate seats","The party or coalition with a majority in the House of Representatives","The Governor-General"],ans:1},
+  {part:3,q:"Who forms government?",opts:["The party with most Senate seats","The party with a majority in the House of Representatives","The Governor-General"],ans:1},
   {part:3,q:"What is a Bill?",opts:["A proposed new law","A financial statement from Treasury","A legal complaint"],ans:0},
   {part:3,q:"What must happen before a Bill becomes law?",opts:["The Prime Minister must sign it","It must pass both houses and receive Royal Assent","A referendum must approve it"],ans:1},
   {part:3,q:"Who gives Royal Assent to a Bill?",opts:["The Prime Minister","The High Court","The Governor-General"],ans:2},
-  {part:3,q:"Who is the Prime Minister?",opts:["The leader of the Opposition","The leader of the party with a majority in the House of Representatives","The King's personal representative"],ans:1},
   {part:3,q:"What is the Cabinet?",opts:["The room where Parliament meets","Senior Ministers who make key decisions about government policy","The full Parliament sitting together"],ans:1},
   {part:3,q:"Who is the Governor-General?",opts:["The leader of the Senate","The King's representative at the federal level","The head of the Defence Force"],ans:1},
   {part:3,q:"Who represents the King in each Australian state?",opts:["The Governor-General","The Premier","A Governor"],ans:2},
@@ -680,20 +817,9 @@ const questionBank = [
   {part:3,q:"What does the Australian Federal Police do?",opts:["Enforce state and territory laws","Enforce federal laws","Only investigate terrorism"],ans:1},
   {part:3,q:"What is jury duty?",opts:["A voluntary community service","A civic responsibility where citizens decide guilt or innocence","A requirement only for lawyers"],ans:1},
   {part:3,q:"Who enforces state and territory laws?",opts:["The Australian Federal Police","The High Court","State and territory police forces"],ans:2},
-  {part:3,q:"What is an Act of Parliament?",opts:["A proposed law before Parliament","A speech by the Prime Minister","A law that has passed both houses and received Royal Assent"],ans:2},
   {part:3,q:"What is a referendum?",opts:["A type of election for senators","A national vote to change the Constitution","A local government vote"],ans:1},
-  {part:3,q:"Which level of government is responsible for immigration?",opts:["State government","Local government","Federal government"],ans:2},
-  {part:3,q:"Which level of government is responsible for Medicare?",opts:["Local government","State government","Federal government"],ans:2},
-  {part:3,q:"What does an independent court system mean?",opts:["Courts are run by the Prime Minister","Courts interpret and apply the law independently of the government","Courts only hear cases from citizens"],ans:1},
-  {part:3,q:"What role does the Governor-General play when a new government is formed?",opts:["They write new laws","They swear in the Prime Minister and ministers","They dissolve all state parliaments"],ans:1},
-  {part:3,q:"How many senators does the ACT have?",opts:["Twelve","Six","Two"],ans:2},
-  {part:3,q:"What must voters do to cast a valid vote for the House of Representatives?",opts:["Write only their first preference","Number all candidates in order of preference","Sign their ballot paper"],ans:1},
-  {part:3,q:"Which court handles federal family law matters?",opts:["The High Court","The Family Court","The Magistrates Court"],ans:1},
-  {part:3,q:"What is the role of state parliaments?",opts:["To override federal laws","To make laws on state responsibilities like schools, hospitals, and police","To manage international trade"],ans:1},
-  {part:3,q:"Which level of government manages local roads?",opts:["Federal government","State government","Local government"],ans:2},
-  {part:3,q:"What is the Senate's role in making laws?",opts:["The Senate has no role","It can pass, reject, or amend Bills from the House of Representatives","The Senate only confirms the Prime Minister's decisions"],ans:1},
-
-  // PART 4
+  {part:3,q:"Which level of government handles immigration?",opts:["State government","Local government","Federal government"],ans:2},
+  {part:3,q:"Which level of government handles Medicare?",opts:["Local government","State government","Federal government"],ans:2},
   {part:4,q:"Is violence ever an acceptable way to change a law in Australia?",opts:["Yes, if enough people support it","Yes, if the government is acting unfairly","No, Australians use democratic processes, never violence"],ans:2},
   {part:4,q:"What does equality of men and women mean in Australia?",opts:["Women have more legal protections than men","Men have more rights in the workplace","Men and women have equal rights in all areas of life"],ans:2},
   {part:4,q:"What does 'equality of opportunity' mean as an Australian value?",opts:["Everyone receives the same income","Everyone gets a fair chance to succeed through talent and effort","The government allocates jobs based on need"],ans:1},
@@ -701,279 +827,344 @@ const questionBank = [
   {part:4,q:"Can Australians practise any religion?",opts:["Only religions recognised by the government","Yes, freedom of religion is a core Australian value","Only religions that do not conflict with Australian values"],ans:1},
   {part:4,q:"What is a privilege of Australian citizenship not available to permanent residents?",opts:["The right to pay no taxes","The ability to apply for an Australian passport and vote in elections","The right to ignore laws you disagree with"],ans:1},
   {part:4,q:"What are the responsibilities of Australian citizenship?",opts:["Paying for healthcare and voting if you feel like it","Obeying the law, voting in elections, and serving on a jury if called","Only obeying the laws you consider fair"],ans:1},
-  {part:4,q:"What does the Australian Citizenship Pledge commit new citizens to?",opts:["Sharing democratic beliefs, respecting rights and liberties, and upholding Australian laws","Giving up previous citizenship","Paying a bond to the government"],ans:0},
+  {part:4,q:"What does the Citizenship Pledge commit new citizens to?",opts:["Sharing democratic beliefs, respecting rights and liberties, and upholding Australian laws","Giving up previous citizenship","Paying a bond to the government"],ans:0},
   {part:4,q:"What does the 'fair go' represent?",opts:["Everyone gets free housing","Everyone deserves an equal chance to succeed through their own effort","The government picks winners based on merit"],ans:1},
   {part:4,q:"Is it acceptable to deny a person equal rights based on their religion?",opts:["Yes, if the majority supports it","Yes, in private situations","No, this is contrary to Australian values and may be illegal"],ans:2},
   {part:4,q:"What does supporting the rule of law mean?",opts:["Following only the laws you agree with","All people including governments must obey the law","Courts decide which laws are important"],ans:1},
-  {part:4,q:"What privilege do citizens have regarding voting?",opts:["The right to vote is optional for citizens","Citizens must vote in federal and state elections; permanent residents cannot vote","All Australian residents including tourists can vote"],ans:1},
-  {part:4,q:"Is jury duty a right or a responsibility of Australian citizens?",opts:["A right exercised voluntarily","A responsibility — citizens must serve if called","Neither — it is only for permanent residents"],ans:1},
+  {part:4,q:"Is jury duty a right or a responsibility of Australian citizens?",opts:["A right exercised voluntarily","A responsibility — citizens must serve if called","Neither — only for permanent residents"],ans:1},
   {part:4,q:"What is the role of tolerance in Australian society?",opts:["Everyone must share the same views","Differences in background and culture are accepted and respected","Tolerance only applies to Australian-born citizens"],ans:1},
   {part:4,q:"Can Australian citizens apply to work in the Australian Public Service?",opts:["No, only permanent residents can apply","Yes, this is a privilege of citizenship","Only if they were born in Australia"],ans:1},
   {part:4,q:"What does compassion mean as an Australian value?",opts:["Ignoring the problems of others","Caring about the wellbeing of others including those who are disadvantaged","Giving money to the government"],ans:1},
   {part:4,q:"What is the significance of the Citizenship Pledge ceremony?",opts:["It is an optional formality","It is a public commitment to Australia and its values, making the person a citizen","It replaces the citizenship test"],ans:1},
   {part:4,q:"Which of the following is NOT consistent with Australian values?",opts:["Respecting people of all religions","Controlling or harming another person","Participating in democratic elections"],ans:1},
-  {part:4,q:"What does 'mutual respect' mean in an Australian context?",opts:["Everyone must agree with each other","Treating each other with consideration regardless of differences","Only showing respect to those who share your values"],ans:1},
   {part:4,q:"Is genital mutilation of girls consistent with Australian values?",opts:["Yes, if it is a cultural practice","No, it is contrary to Australian values and illegal","It depends on the religion"],ans:1},
-  {part:4,q:"What does freedom of expression include?",opts:["Saying anything without consequences","Expressing views, accessing information, and criticising the government within the law","Only the right to publish books"],ans:1},
   {part:4,q:"Must all Australians obey the same laws?",opts:["No, citizens have more obligations than permanent residents","Yes, the law applies equally to everyone","Only citizens must obey federal laws"],ans:1},
   {part:4,q:"What does secular government mean for religious Australians?",opts:["They must keep their religion private","They are free to practise their religion without government interference","The government funds their religious institutions"],ans:1},
-  {part:4,q:"Can an Australian citizen register a child born overseas as an Australian citizen?",opts:["No, the child must apply separately at 18","Yes, this is a privilege of citizenship","Only if both parents are citizens"],ans:1},
-  {part:4,q:"What does peacefully resolving disputes mean in Australian values?",opts:["Disputes are resolved through threats if necessary","Differences are worked out through legal means and democratic processes, never violence","Disputes must be resolved within the family only"],ans:1},
+  {part:4,q:"Can an Australian citizen register a child born overseas as Australian?",opts:["No, the child must apply separately at 18","Yes, this is a privilege of citizenship","Only if both parents are citizens"],ans:1},
+  {part:4,q:"What does peacefully resolving disputes mean?",opts:["Disputes are resolved through threats if necessary","Differences are worked out through legal means and democratic processes, never violence","Disputes must stay within the family"],ans:1},
+  {part:4,q:"What does freedom of expression include?",opts:["Saying anything without consequences","Expressing views, accessing information, and criticising the government within the law","Only the right to publish books"],ans:1}
 ];
 
-let currentSection = null;
-let filteredCards = [...allCards];
-let currentCardIndex = 0;
-let isFlipped = false;
-let testQuestions = [];
-let currentQIndex = 0;
-let answers = [];
-let scores = {p1:0,p2:0,p3:0,p4:0,total:0};
+// STATE
+let currentSection=null, currentModule=null;
+let filteredCards=[...allCards], cardIndex=0, isFlipped=false;
+let testQuestions=[], qIndex=0, answers=[], scores={p1:0,p2:0,p3:0,p4:0,total:0};
 
-function showSection(section) {
-  ['home-screen','learn-screen','study-screen','test-screen','module-content','question-screen','results-screen'].forEach(id => {
-    const el = document.getElementById(id);
-    el.style.display = 'none';
-  });
-  currentSection = section;
-  document.getElementById('back-btn').style.display = 'flex';
-  const titles = {learn:'Learn',study:'Study',test:'Test'};
-  document.getElementById('topbar-title').textContent = titles[section] || 'Citizenship Prep';
-  if (section === 'learn') document.getElementById('learn-screen').style.display = 'block';
-  else if (section === 'study') { document.getElementById('study-screen').style.display = 'block'; initStudy(); }
-  else if (section === 'test') { document.getElementById('test-screen').style.display = 'block'; document.getElementById('test-setup').style.display = 'block'; }
+// NAVIGATION
+function showSection(s){
+  hide(['home-screen','learn-screen','study-screen','test-screen','module-content','question-screen','results-screen']);
+  currentSection=s;
+  show('back-btn','flex');
+  const titles={learn:'Learn',study:'Study',test:'Test'};
+  document.getElementById('topbar-title').textContent=titles[s]||'Citizenship Prep';
+  if(s==='learn')show('learn-screen');
+  else if(s==='study'){show('study-screen');initStudy();}
+  else if(s==='test'){show('test-screen');document.getElementById('test-setup').style.display='block';}
 }
 
-function showModule(index) {
-  document.getElementById('learn-screen').style.display = 'none';
-  document.getElementById('module-body').innerHTML = moduleContent[index].html;
-  document.getElementById('module-content').style.display = 'block';
-  document.getElementById('topbar-title').textContent = 'Part ' + (index+1);
+function showModule(i){
+  currentModule=i;
+  document.getElementById('learn-screen').style.display='none';
+  document.getElementById('module-body').innerHTML=moduleContent[i].html;
+  show('module-content');
+  document.getElementById('topbar-title').textContent='Part '+(i+1);
 }
 
-function goBack() {
-  if (document.getElementById('module-content').style.display === 'block') {
-    document.getElementById('module-content').style.display = 'none';
-    document.getElementById('learn-screen').style.display = 'block';
-    document.getElementById('topbar-title').textContent = 'Learn';
-    return;
+function goBack(){
+  if(vis('module-content')){
+    hide(['module-content']);show('learn-screen');
+    document.getElementById('topbar-title').textContent='Learn';return;
   }
-  if (document.getElementById('question-screen').style.display === 'block' || document.getElementById('results-screen').style.display === 'block') {
-    document.getElementById('question-screen').style.display = 'none';
-    document.getElementById('results-screen').style.display = 'none';
-    document.getElementById('test-screen').style.display = 'block';
-    document.getElementById('test-setup').style.display = 'block';
-    document.getElementById('topbar-title').textContent = 'Test';
-    return;
+  if(vis('question-screen')||vis('results-screen')){
+    hide(['question-screen','results-screen']);
+    show('test-screen');document.getElementById('test-setup').style.display='block';
+    document.getElementById('topbar-title').textContent='Test';return;
   }
   goHome();
 }
 
-function goHome() {
-  ['learn-screen','study-screen','test-screen','module-content','question-screen','results-screen'].forEach(id => document.getElementById(id).style.display = 'none');
-  document.getElementById('home-screen').style.display = 'block';
-  document.getElementById('back-btn').style.display = 'none';
-  document.getElementById('topbar-title').textContent = 'Citizenship Prep';
-  currentSection = null;
+function goHome(){
+  hide(['learn-screen','study-screen','test-screen','module-content','question-screen','results-screen']);
+  show('home-screen');
+  document.getElementById('back-btn').style.display='none';
+  document.getElementById('topbar-title').textContent='Citizenship Prep';
+  currentSection=null;
 }
 
-function initStudy() {
-  filterCards('all', document.querySelector('.filter-btn.active'));
-}
+function show(id,d){document.getElementById(id).style.display=d||'block';}
+function hide(ids){ids.forEach(function(id){document.getElementById(id).style.display='none';});}
+function vis(id){return document.getElementById(id).style.display!=='none'&&document.getElementById(id).style.display!=='';}
 
-function filterCards(part, btn) {
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+// STUDY
+function initStudy(){filterCards('all',document.querySelector('.filter-btn.active'));}
+
+function filterCards(part,btn){
+  document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active');});
   btn.classList.add('active');
-  filteredCards = part === 'all' ? [...allCards] : allCards.filter(c => c.part === part);
-  currentCardIndex = 0;
-  isFlipped = false;
-  renderCard();
+  filteredCards=part==='all'?[...allCards]:allCards.filter(function(c){return c.part===part;});
+  cardIndex=0;isFlipped=false;renderCard();
 }
 
-function shuffleCards() {
-  for (let i = filteredCards.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i+1));
-    [filteredCards[i], filteredCards[j]] = [filteredCards[j], filteredCards[i]];
-  }
-  currentCardIndex = 0;
-  isFlipped = false;
-  renderCard();
+function shuffleCards(){
+  for(var i=filteredCards.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=filteredCards[i];filteredCards[i]=filteredCards[j];filteredCards[j]=t;}
+  cardIndex=0;isFlipped=false;renderCard();
 }
 
-function renderCard() {
-  const card = filteredCards[currentCardIndex];
-  document.getElementById('card-front-text').textContent = card.q;
-  document.getElementById('card-back-text').textContent = card.a;
-  document.getElementById('card-part-badge').textContent = 'Part ' + card.part;
-  document.getElementById('card-counter').textContent = (currentCardIndex+1) + ' / ' + filteredCards.length;
-  document.getElementById('card-count-label').textContent = filteredCards.length + ' cards';
+function renderCard(){
+  var c=filteredCards[cardIndex];
+  document.getElementById('card-front-text').textContent=c.q;
+  document.getElementById('card-back-text').textContent=c.a;
+  document.getElementById('card-part-badge').textContent='Part '+c.part;
+  document.getElementById('card-counter').textContent=(cardIndex+1)+' / '+filteredCards.length;
+  document.getElementById('card-count-label').textContent=filteredCards.length+' cards';
   document.getElementById('flashcard').classList.remove('flipped');
-  isFlipped = false;
+  isFlipped=false;
 }
 
-function flipCard() {
-  const fc = document.getElementById('flashcard');
-  isFlipped = !isFlipped;
-  fc.classList.toggle('flipped', isFlipped);
-}
+function flipCard(){isFlipped=!isFlipped;document.getElementById('flashcard').classList.toggle('flipped',isFlipped);}
+function nextCard(){if(cardIndex<filteredCards.length-1){cardIndex++;renderCard();}}
+function prevCard(){if(cardIndex>0){cardIndex--;renderCard();}}
 
-function nextCard() { if (currentCardIndex < filteredCards.length-1) { currentCardIndex++; renderCard(); } }
-function prevCard() { if (currentCardIndex > 0) { currentCardIndex--; renderCard(); } }
-
-function startTest() {
-  testQuestions = [];
-  [1,2,3,4].forEach(p => {
-    const pool = questionBank.filter(q => q.part === p).sort(() => Math.random()-0.5);
-    testQuestions.push(...pool.slice(0,5));
+// TEST
+function startTest(){
+  testQuestions=[];
+  [1,2,3,4].forEach(function(p){
+    var pool=questionBank.filter(function(q){return q.part===p;}).sort(function(){return Math.random()-0.5;});
+    testQuestions=testQuestions.concat(pool.slice(0,5));
   });
-  testQuestions = testQuestions.sort(() => Math.random()-0.5);
-  currentQIndex = 0;
-  answers = [];
-  scores = {p1:0,p2:0,p3:0,p4:0,total:0};
-  document.getElementById('test-screen').style.display = 'none';
-  document.getElementById('question-screen').style.display = 'block';
+  testQuestions=testQuestions.sort(function(){return Math.random()-0.5;});
+  qIndex=0;answers=[];scores={p1:0,p2:0,p3:0,p4:0,total:0};
+  hide(['test-screen']);show('question-screen');
   renderQuestion();
 }
 
-function renderQuestion() {
-  const q = testQuestions[currentQIndex];
-  document.getElementById('q-num-label').textContent = 'Question ' + (currentQIndex+1) + ' of ' + testQuestions.length;
-  document.getElementById('q-score-label').textContent = scores.total + ' correct';
-  document.getElementById('q-progress-fill').style.width = ((currentQIndex / testQuestions.length)*100) + '%';
-  const pl = {1:'Part 1 - Australia & its People',2:'Part 2 - Democratic Beliefs',3:'Part 3 - Government & Law',4:'Part 4 - Australian Values'};
-  document.getElementById('q-part-badge').textContent = pl[q.part];
-  document.getElementById('question-text').textContent = q.q;
+function renderQuestion(){
+  var q=testQuestions[qIndex];
+  var total=testQuestions.length;
+  document.getElementById('q-num-label').textContent='Question '+(qIndex+1)+' of '+total;
+  document.getElementById('q-score-label').textContent=scores.total+' correct';
+  document.getElementById('q-progress-fill').style.width=((qIndex/total)*100)+'%';
+  var pl={1:'Part 1 — Australia & its People',2:'Part 2 — Democratic Beliefs',3:'Part 3 — Government & Law',4:'Part 4 — Australian Values'};
+  document.getElementById('q-part-badge').textContent=pl[q.part];
+  document.getElementById('question-text').textContent=q.q;
 
-  const letters = ['A','B','C'];
-  const si = [0,1,2].sort(() => Math.random()-0.5);
-  q._sOpts = si.map(i => q.opts[i]);
-  q._sAns = si.indexOf(q.ans);
+  var si=[0,1,2].sort(function(){return Math.random()-0.5;});
+  q._sOpts=si.map(function(i){return q.opts[i];});
+  q._sAns=si.indexOf(q.ans);
 
-  const opts = document.getElementById('options-list');
-  opts.innerHTML = '';
-  q._sOpts.forEach((opt, i) => {
-    const btn = document.createElement('button');
-    btn.className = 'option-btn';
-    btn.innerHTML = '<span class="option-letter">' + letters[i] + '</span><span>' + opt + '</span>';
-    btn.onclick = () => selectAnswer(i, q);
+  var opts=document.getElementById('options-list');
+  opts.innerHTML='';
+  var letters=['A','B','C'];
+  q._sOpts.forEach(function(opt,i){
+    var btn=document.createElement('button');
+    btn.className='option-btn';
+    btn.innerHTML='<span class="option-letter">'+letters[i]+'</span><span>'+opt+'</span>';
+    btn.onclick=function(){selectAnswer(i,q);};
     opts.appendChild(btn);
   });
 
-  document.getElementById('feedback-box').style.display = 'none';
-  document.getElementById('next-btn').style.display = 'none';
-  document.getElementById('next-btn').textContent = currentQIndex < testQuestions.length-1 ? 'Next Question' : 'See Results';
+  document.getElementById('feedback-box').style.display='none';
+  document.getElementById('next-btn').style.display='none';
+  document.getElementById('next-btn').textContent=qIndex<total-1?'Next \u2192':'See Results';
+
+  // Back button — show if we have any answered questions to go back to
+  var backBtn=document.getElementById('q-back-answered');
+  backBtn.style.display=qIndex>0?'block':'none';
 }
 
-function selectAnswer(selected, q) {
-  const optBtns = document.querySelectorAll('.option-btn');
-  optBtns.forEach(b => { b.classList.add('answered'); b.onclick = null; });
-  const isCorrect = selected === q._sAns;
-  answers.push({q:q.q, selected:q._sOpts[selected], correct:q._sOpts[q._sAns], isCorrect, part:q.part});
-  if (isCorrect) {
+function selectAnswer(selected,q){
+  var optBtns=document.querySelectorAll('.option-btn');
+  optBtns.forEach(function(b){b.classList.add('answered');b.onclick=null;});
+  var isCorrect=selected===q._sAns;
+  answers.push({q:q.q,selected:q._sOpts[selected],correct:q._sOpts[q._sAns],isCorrect:isCorrect,part:q.part,qIndex:qIndex});
+  if(isCorrect){
     optBtns[selected].classList.add('selected-correct');
-    scores.total++;
-    scores['p'+q.part]++;
+    scores.total++;scores['p'+q.part]++;
   } else {
     optBtns[selected].classList.add('selected-wrong');
     optBtns[q._sAns].classList.add('show-correct');
   }
-  const fb = document.getElementById('feedback-box');
-  fb.className = 'feedback-box ' + (isCorrect ? 'correct' : 'wrong');
-  document.getElementById('feedback-label').textContent = isCorrect ? '+ Correct!' : 'x Incorrect';
-  document.getElementById('feedback-text').textContent = isCorrect ? 'Well done.' : 'Correct answer: "' + q._sOpts[q._sAns] + '"';
-  fb.style.display = 'block';
-  document.getElementById('q-score-label').textContent = scores.total + ' correct';
-  document.getElementById('next-btn').style.display = 'block';
+  var fb=document.getElementById('feedback-box');
+  fb.className='feedback-box '+(isCorrect?'correct':'wrong');
+  document.getElementById('feedback-label').textContent=isCorrect?'Correct':'Incorrect';
+  document.getElementById('feedback-text').textContent=isCorrect?'Well done.':'Correct answer: "'+q._sOpts[q._sAns]+'"';
+  fb.style.display='block';
+  document.getElementById('q-score-label').textContent=scores.total+' correct';
+  document.getElementById('next-btn').style.display='block';
+  // Also show back button after answering (in case they want to review previous)
+  document.getElementById('q-back-answered').style.display=qIndex>0?'block':'none';
 }
 
-function nextQuestion() {
-  currentQIndex++;
-  if (currentQIndex >= testQuestions.length) showResults();
-  else renderQuestion();
+function goBackAnswered(){
+  // Go back to the previous answered question in review mode
+  if(qIndex<=0)return;
+  qIndex--;
+  var q=testQuestions[qIndex];
+  var prev=answers[qIndex];
+  if(!prev)return;
+
+  // Re-render question in answered state
+  var total=testQuestions.length;
+  document.getElementById('q-num-label').textContent='Question '+(qIndex+1)+' of '+total;
+  document.getElementById('q-score-label').textContent=scores.total+' correct';
+  document.getElementById('q-progress-fill').style.width=((qIndex/total)*100)+'%';
+  var pl={1:'Part 1 — Australia & its People',2:'Part 2 — Democratic Beliefs',3:'Part 3 — Government & Law',4:'Part 4 — Australian Values'};
+  document.getElementById('q-part-badge').textContent=pl[q.part];
+  document.getElementById('question-text').textContent=q.q;
+
+  var opts=document.getElementById('options-list');
+  opts.innerHTML='';
+  var letters=['A','B','C'];
+  q._sOpts.forEach(function(opt,i){
+    var btn=document.createElement('button');
+    btn.className='option-btn answered';
+    var cls='';
+    if(opt===prev.correct)cls='show-correct';
+    if(opt===prev.selected&&!prev.isCorrect)cls='selected-wrong';
+    if(opt===prev.selected&&prev.isCorrect)cls='selected-correct';
+    if(cls)btn.classList.add(cls);
+    btn.innerHTML='<span class="option-letter">'+letters[i]+'</span><span>'+opt+'</span>';
+    opts.appendChild(btn);
+  });
+
+  var fb=document.getElementById('feedback-box');
+  fb.className='feedback-box '+(prev.isCorrect?'correct':'wrong');
+  document.getElementById('feedback-label').textContent=prev.isCorrect?'Correct':'Incorrect';
+  document.getElementById('feedback-text').textContent=prev.isCorrect?'Well done.':'Correct answer: "'+prev.correct+'"';
+  fb.style.display='block';
+
+  // Navigation: back shows if not first, next always shows when reviewing answered
+  document.getElementById('q-back-answered').style.display=qIndex>0?'block':'none';
+  document.getElementById('next-btn').style.display='block';
+  document.getElementById('next-btn').textContent='Forward \u2192';
 }
 
-function showResults() {
-  document.getElementById('question-screen').style.display = 'none';
-  document.getElementById('results-screen').style.display = 'block';
-  const total = testQuestions.length;
-  const pct = Math.round((scores.total/total)*100);
-  const vPass = scores.p4 === 5;
-  const oPass = scores.total >= 15;
-  const passed = oPass && vPass;
+function nextQuestion(){
+  // If we backed up and are reviewing, move forward again
+  if(qIndex<answers.length-1&&answers[qIndex+1]){
+    qIndex++;
+    var q=testQuestions[qIndex];
+    var prev=answers[qIndex];
+    var total=testQuestions.length;
+    document.getElementById('q-num-label').textContent='Question '+(qIndex+1)+' of '+total;
+    document.getElementById('q-score-label').textContent=scores.total+' correct';
+    document.getElementById('q-progress-fill').style.width=((qIndex/total)*100)+'%';
+    var pl={1:'Part 1 — Australia & its People',2:'Part 2 — Democratic Beliefs',3:'Part 3 — Government & Law',4:'Part 4 — Australian Values'};
+    document.getElementById('q-part-badge').textContent=pl[q.part];
+    document.getElementById('question-text').textContent=q.q;
+    var opts=document.getElementById('options-list');
+    opts.innerHTML='';
+    var letters=['A','B','C'];
+    q._sOpts.forEach(function(opt,i){
+      var btn=document.createElement('button');
+      btn.className='option-btn answered';
+      var cls='';
+      if(opt===prev.correct)cls='show-correct';
+      if(opt===prev.selected&&!prev.isCorrect)cls='selected-wrong';
+      if(opt===prev.selected&&prev.isCorrect)cls='selected-correct';
+      if(cls)btn.classList.add(cls);
+      btn.innerHTML='<span class="option-letter">'+letters[i]+'</span><span>'+opt+'</span>';
+      opts.appendChild(btn);
+    });
+    var fb=document.getElementById('feedback-box');
+    fb.className='feedback-box '+(prev.isCorrect?'correct':'wrong');
+    document.getElementById('feedback-label').textContent=prev.isCorrect?'Correct':'Incorrect';
+    document.getElementById('feedback-text').textContent=prev.isCorrect?'Well done.':'Correct answer: "'+prev.correct+'"';
+    fb.style.display='block';
+    document.getElementById('q-back-answered').style.display='block';
+    document.getElementById('next-btn').textContent=qIndex===answers.length-1&&answers.length===total?'See Results':'Forward \u2192';
+    if(qIndex===answers.length-1&&answers.length===total){
+      document.getElementById('next-btn').onclick=function(){showResults();};
+    }
+    return;
+  }
+  // Move to next unanswered
+  qIndex++;
+  if(qIndex>=testQuestions.length){showResults();return;}
+  // Restore next-btn onclick
+  document.getElementById('next-btn').onclick=function(){nextQuestion();};
+  renderQuestion();
+}
 
-  document.getElementById('result-banner').className = 'result-banner ' + (passed ? 'pass' : 'fail');
-  document.getElementById('result-icon').textContent = passed ? '' : '';
-  document.getElementById('result-verdict').textContent = passed ? 'PASS' : 'FAIL';
-  let msg = scores.total + ' / ' + total + ' correct (' + pct + '%)';
-  if (!vPass && oPass) msg += ' - Failed: Values not 5/5';
-  else if (!oPass) msg += ' - 75% pass mark not met';
-  document.getElementById('result-score').textContent = msg;
+function showResults(){
+  hide(['question-screen']);show('results-screen');
+  var total=testQuestions.length;
+  var pct=Math.round((scores.total/total)*100);
+  var vPass=scores.p4===5;
+  var oPass=scores.total>=15;
+  var passed=oPass&&vPass;
 
-  const fmt = (n, of) => {
-    const s = document.createElement('span');
-    s.textContent = n + ' / ' + of;
-    s.className = n === of ? 'score-green' : (n < Math.ceil(of*0.75) ? 'score-red' : '');
+  document.getElementById('result-banner').className='result-banner '+(passed?'pass':'fail');
+  document.getElementById('result-icon').textContent=passed?'':'';
+  document.getElementById('result-verdict').textContent=passed?'PASS':'FAIL';
+  var msg=scores.total+' / '+total+' correct ('+pct+'%)';
+  if(!vPass&&oPass)msg+=' — Values not 5/5';
+  else if(!oPass)msg+=' — 75% pass mark not met';
+  document.getElementById('result-score').textContent=msg;
+
+  function fmtScore(n,of,extra){
+    var s=document.createElement('span');
+    s.textContent=n+' / '+of+(extra||'');
+    s.className=n===of?'score-green':(n<Math.ceil(of*0.75)?'score-red':'');
     return s;
-  };
+  }
 
-  const tsEl = document.getElementById('res-total');
-  tsEl.innerHTML = '';
-  const ts = document.createElement('span');
-  ts.textContent = scores.total + '/20 (' + pct + '%) - ' + (passed ? 'PASS' : 'FAIL');
-  ts.className = passed ? 'score-green' : 'score-red';
-  tsEl.appendChild(ts);
+  var ts=document.getElementById('res-total');ts.innerHTML='';
+  var tEl=document.createElement('span');
+  tEl.textContent=scores.total+'/20 ('+pct+'%) — '+(passed?'PASS':'FAIL');
+  tEl.className=passed?'score-green':'score-red';
+  ts.appendChild(tEl);
 
-  ['p1','p2','p3','p4'].forEach(p => {
-    const el = document.getElementById('res-' + p);
-    el.innerHTML = '';
-    const s = scores[p];
-    const sp = fmt(s, 5);
-    if (p === 'p4' && s < 5) { sp.textContent = s + ' / 5 - FAILED (must be 5/5)'; sp.className = 'score-red'; }
+  ['p1','p2','p3','p4'].forEach(function(p){
+    var el=document.getElementById('res-'+p);el.innerHTML='';
+    var s=scores[p];
+    var sp=fmtScore(s,5);
+    if(p==='p4'&&s<5){sp.textContent=s+' / 5 — FAILED (must be 5/5)';sp.className='score-red';}
     el.appendChild(sp);
   });
 
-  const wrong = answers.filter(a => !a.isCorrect);
-  const rs = document.getElementById('review-wrong-section');
-  const rl = document.getElementById('review-wrong-list');
-  rl.innerHTML = '';
-  if (wrong.length === 0) { rs.style.display = 'none'; }
-  else {
-    rs.style.display = 'block';
-    rs.querySelector('h3').textContent = wrong.length + ' Question' + (wrong.length !== 1 ? 's' : '') + ' to Review';
-    wrong.forEach(a => {
-      const item = document.createElement('div');
-      item.className = 'review-item';
-      item.innerHTML = '<div class="review-q">' + a.q + '</div><div class="review-a"><span class="your-ans wrong">x Your answer: ' + a.selected + '</span><span class="correct-ans">+ Correct: ' + a.correct + '</span></div>';
+  var wrong=answers.filter(function(a){return !a.isCorrect;});
+  var rs=document.getElementById('review-wrong-section');
+  var rl=document.getElementById('review-wrong-list');
+  rl.innerHTML='';
+  if(wrong.length===0){rs.style.display='none';}
+  else{
+    rs.style.display='block';
+    document.getElementById('review-heading').textContent=wrong.length+' Question'+(wrong.length!==1?'s':'')+' to Review';
+    wrong.forEach(function(a){
+      var item=document.createElement('div');item.className='review-item';
+      item.innerHTML='<div class="review-q">'+a.q+'</div><div><span class="your-ans wrong">Your answer: '+a.selected+'</span><span class="correct-ans">Correct: '+a.correct+'</span></div>';
       rl.appendChild(item);
     });
   }
-  if (passed) launchConfetti();
+  if(passed)launchConfetti();
 }
 
-function retryTest() { startTest(); }
+function retryTest(){
+  document.getElementById('next-btn').onclick=function(){nextQuestion();};
+  startTest();
+}
 
-function launchConfetti() {
-  const canvas = document.getElementById('confetti-canvas');
-  canvas.style.display = 'block';
-  const ctx = canvas.getContext('2d');
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-  const pieces = [];
-  const colours = ['#2d7a6e','#c9a84c','#e8c96e','#3a9180','#ffffff','#f0a030'];
-  for (let i = 0; i < 120; i++) {
-    pieces.push({x:Math.random()*canvas.width, y:Math.random()*-canvas.height, w:8+Math.random()*8, h:6+Math.random()*6, color:colours[Math.floor(Math.random()*colours.length)], angle:Math.random()*Math.PI*2, spin:(Math.random()-0.5)*0.2, vy:2+Math.random()*3, vx:(Math.random()-0.5)*2});
-  }
-  let frame = 0;
-  function draw() {
+// CONFETTI
+function launchConfetti(){
+  var canvas=document.getElementById('confetti-canvas');
+  canvas.style.display='block';
+  var ctx=canvas.getContext('2d');
+  canvas.width=window.innerWidth;canvas.height=window.innerHeight;
+  var pieces=[];
+  var cols=['#1d5a51','#c9a84c','#e8c96e','#3a9180','#ffffff','#f0a030'];
+  for(var i=0;i<120;i++){pieces.push({x:Math.random()*canvas.width,y:Math.random()*-canvas.height,w:8+Math.random()*8,h:6+Math.random()*6,color:cols[Math.floor(Math.random()*cols.length)],angle:Math.random()*Math.PI*2,spin:(Math.random()-0.5)*0.2,vy:2+Math.random()*3,vx:(Math.random()-0.5)*2});}
+  var frame=0;
+  function draw(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
-    pieces.forEach(p => {
-      ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.angle); ctx.fillStyle = p.color; ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h); ctx.restore();
-      p.y += p.vy; p.x += p.vx; p.angle += p.spin;
-      if (p.y > canvas.height) { p.y = -20; p.x = Math.random()*canvas.width; }
+    pieces.forEach(function(p){
+      ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.angle);ctx.fillStyle=p.color;ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);ctx.restore();
+      p.y+=p.vy;p.x+=p.vx;p.angle+=p.spin;
+      if(p.y>canvas.height){p.y=-20;p.x=Math.random()*canvas.width;}
     });
     frame++;
-    if (frame < 180) requestAnimationFrame(draw);
-    else { ctx.clearRect(0,0,canvas.width,canvas.height); canvas.style.display = 'none'; }
+    if(frame<200)requestAnimationFrame(draw);
+    else{ctx.clearRect(0,0,canvas.width,canvas.height);canvas.style.display='none';}
   }
   draw();
 }
