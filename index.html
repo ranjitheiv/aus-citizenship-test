@@ -58,7 +58,10 @@ body{font-family:var(--font);background:var(--off-white);color:var(--slate);min-
 
 /* ── BACK BUTTON (mobile floating) ── */
 #back-btn{
-  position:fixed;top:14px;left:14px;z-index:300;
+  position:fixed;
+  top:calc(14px + env(safe-area-inset-top, 0px));
+  left:calc(14px + env(safe-area-inset-left, 0px));
+  z-index:300;
   background:rgba(29,90,81,0.92);
   border:none;color:white;border-radius:20px;
   padding:8px 16px;font-size:14px;font-weight:600;
@@ -70,6 +73,54 @@ body{font-family:var(--font);background:var(--off-white);color:var(--slate);min-
 }
 #back-btn:active{background:rgba(22,71,63,0.95);}
 @media(min-width:820px){#back-btn{display:none!important;}}
+
+/* ── iOS SAFE AREA & FULL HEIGHT ── */
+body{
+  padding-top:env(safe-area-inset-top, 0px);
+  padding-bottom:env(safe-area-inset-bottom, 0px);
+  padding-left:env(safe-area-inset-left, 0px);
+  padding-right:env(safe-area-inset-right, 0px);
+}
+/* Each screen fills the full available viewport height on mobile */
+@media(max-width:819px){
+  #home-screen,
+  .section-screen,
+  #question-screen,
+  #results-screen{
+    min-height:calc(100vh - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));
+  }
+  /* Test setup fills height so content is spread out, not bunched top */
+  .test-setup{
+    min-height:calc(100vh - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    padding-top:calc(60px + env(safe-area-inset-top,0px));
+    padding-bottom:calc(24px + env(safe-area-inset-bottom,0px));
+  }
+  /* Learn module list fills height */
+  .module-list{
+    min-height:calc(100vh - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));
+    padding-top:calc(64px + env(safe-area-inset-top,0px));
+    justify-content:center;
+  }
+  /* Study fills height */
+  .card-area{
+    padding-bottom:calc(24px + env(safe-area-inset-bottom,0px));
+  }
+  /* Question screen body padding for back button */
+  .q-header{
+    padding-top:calc(13px + env(safe-area-inset-top,0px));
+  }
+  /* Hero pushed below status bar */
+  .hero{
+    padding-top:calc(28px + env(safe-area-inset-top,0px));
+  }
+  /* Results bottom padding */
+  #results-screen{
+    padding-bottom:calc(48px + env(safe-area-inset-bottom,0px));
+  }
+}
 
 /* ── DESKTOP LAYOUT ── */
 @media(min-width:820px){
