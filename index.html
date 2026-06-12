@@ -58,67 +58,71 @@ body{font-family:var(--font);background:var(--off-white);color:var(--slate);min-
 
 /* ── BACK BUTTON (mobile floating) ── */
 #back-btn{
-  position:fixed;
-  top:calc(14px + env(safe-area-inset-top, 0px));
-  left:calc(14px + env(safe-area-inset-left, 0px));
-  z-index:300;
-  background:rgba(29,90,81,0.92);
-  border:none;color:white;border-radius:20px;
-  padding:8px 16px;font-size:14px;font-weight:600;
-  font-family:var(--font);cursor:pointer;
-  display:none;align-items:center;gap:4px;
-  -webkit-tap-highlight-color:transparent;
-  backdrop-filter:blur(8px);
-  box-shadow:0 2px 12px rgba(0,0,0,0.2);
+  display:none; /* hidden — replaced by .mobile-nav bars per screen */
 }
-#back-btn:active{background:rgba(22,71,63,0.95);}
 @media(min-width:820px){#back-btn{display:none!important;}}
 
-/* ── iOS SAFE AREA & FULL HEIGHT ── */
+/* ── MOBILE NAV BAR ── */
+/* Sits at the top of each screen on mobile, pushes content below */
+.mobile-nav{
+  display:none;
+}
+@media(max-width:819px){
+  .mobile-nav{
+    display:flex;
+    align-items:center;
+    padding:calc(env(safe-area-inset-top,14px) + 10px) 16px 10px;
+    background:var(--off-white);
+    position:sticky;
+    top:0;
+    z-index:100;
+  }
+  .mobile-nav-back{
+    background:var(--teal);
+    border:none;color:white;border-radius:20px;
+    padding:8px 16px;font-size:14px;font-weight:600;
+    font-family:var(--font);cursor:pointer;
+    display:flex;align-items:center;gap:4px;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .mobile-nav-back:active{background:#16473f;}
+  .mobile-nav-title{
+    font-size:15px;font-weight:600;color:var(--slate);
+    margin-left:12px;letter-spacing:-0.01em;
+  }
+}
+
+/* ── iOS SAFE AREA ── */
 body{
-  padding-top:env(safe-area-inset-top, 0px);
   padding-bottom:env(safe-area-inset-bottom, 0px);
   padding-left:env(safe-area-inset-left, 0px);
   padding-right:env(safe-area-inset-right, 0px);
 }
-/* Each screen fills the full available viewport height on mobile */
 @media(max-width:819px){
-  #home-screen,
-  .section-screen,
-  #question-screen,
-  #results-screen{
-    min-height:calc(100vh - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));
-  }
-  /* Test setup fills height so content is spread out, not bunched top */
-  .test-setup{
-    min-height:calc(100vh - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));
-    display:flex;
-    flex-direction:column;
-    justify-content:space-between;
-    padding-top:calc(60px + env(safe-area-inset-top,0px));
-    padding-bottom:calc(24px + env(safe-area-inset-bottom,0px));
-  }
-  /* Learn module list fills height */
-  .module-list{
-    min-height:calc(100vh - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));
-    padding-top:calc(64px + env(safe-area-inset-top,0px));
-    justify-content:center;
-  }
-  /* Study fills height */
-  .card-area{
-    padding-bottom:calc(24px + env(safe-area-inset-bottom,0px));
-  }
-  /* Question screen body padding for back button */
-  .q-header{
-    padding-top:calc(13px + env(safe-area-inset-top,0px));
-  }
-  /* Hero pushed below status bar */
+  /* Hero pushed below status bar on home screen */
   .hero{
     padding-top:calc(28px + env(safe-area-inset-top,0px));
   }
-  /* Results bottom padding */
+  /* Test setup: flex column so content fills and Start Test sits lower */
+  .test-setup{
+    display:flex;
+    flex-direction:column;
+    min-height:calc(100vh - env(safe-area-inset-bottom,0px) - 120px);
+  }
+  .test-setup .start-btn{
+    margin-top:auto;
+  }
+  /* Bottom safe area on results */
   #results-screen{
     padding-bottom:calc(48px + env(safe-area-inset-bottom,0px));
+  }
+  /* Bottom safe area on card area */
+  .card-area{
+    padding-bottom:calc(24px + env(safe-area-inset-bottom,0px));
+  }
+  /* Question screen q-header needs no extra top padding now — mobile-nav handles it */
+  .q-header{
+    padding-top:13px;
   }
 }
 
@@ -665,6 +669,10 @@ body{
 
 <!-- LEARN -->
 <div id="learn-screen" class="section-screen">
+  <div class="mobile-nav">
+    <button class="mobile-nav-back" onclick="goHome()">&#8592; Back</button>
+    <span class="mobile-nav-title">Learn</span>
+  </div>
   <div class="module-list">
     <div class="module-card" onclick="showModule(0)">
       <div class="module-card-header"><div class="module-number">1</div><h3>Australia and its People</h3></div>
@@ -687,11 +695,18 @@ body{
 
 <!-- MODULE CONTENT -->
 <div id="module-content">
+  <div class="mobile-nav">
+    <button class="mobile-nav-back" onclick="showSection('learn')">&#8592; Back</button>
+  </div>
   <div class="module-content-body" id="module-body"></div>
 </div>
 
 <!-- STUDY -->
 <div id="study-screen" class="section-screen">
+  <div class="mobile-nav">
+    <button class="mobile-nav-back" onclick="goHome()">&#8592; Back</button>
+    <span class="mobile-nav-title">Study</span>
+  </div>
   <div class="study-controls">
     <div class="filter-row">
       <button class="filter-btn active" onclick="filterCards('all',this)">All Parts</button>
@@ -734,6 +749,10 @@ body{
 
 <!-- TEST -->
 <div id="test-screen" class="section-screen">
+  <div class="mobile-nav">
+    <button class="mobile-nav-back" onclick="goHome()">&#8592; Back</button>
+    <span class="mobile-nav-title">Test</span>
+  </div>
   <div class="test-setup" id="test-setup">
     <h2>Practice Test</h2>
     <p>20 questions drawn randomly from 400+, with 5 from each of the four parts &mdash; matching the real exam distribution.</p>
@@ -753,6 +772,10 @@ body{
 
 <!-- QUESTION -->
 <div id="question-screen">
+  <div class="mobile-nav">
+    <button class="mobile-nav-back" onclick="goBack()">&#8592; Back</button>
+    <span class="mobile-nav-title" id="q-mobile-title">Question 1 of 20</span>
+  </div>
   <div class="q-header">
     <div class="q-progress-row">
       <span id="q-num-label">Question 1 of 20</span>
@@ -777,6 +800,10 @@ body{
 
 <!-- RESULTS -->
 <div id="results-screen">
+  <div class="mobile-nav">
+    <button class="mobile-nav-back" onclick="goBack()">&#8592; Back</button>
+    <span class="mobile-nav-title">Results</span>
+  </div>
   <div class="result-banner" id="result-banner">
     <div class="result-icon" id="result-icon"></div>
     <div class="result-verdict" id="result-verdict"></div>
@@ -1222,17 +1249,12 @@ function showSection(s){
     document.getElementById('test-setup').style.display='block';
   }
   updateSidebarActive(s);
-  // mobile back button
-  var bb=document.getElementById('back-btn');
-  if(bb)bb.style.display=isDesktop()?'none':'flex';
 }
 
 function showModule(i){
   hideAll();
   document.getElementById('module-body').innerHTML=moduleContent[i].html;
   show('module-content');
-  var bb=document.getElementById('back-btn');
-  if(bb)bb.style.display=isDesktop()?'none':'flex';
 }
 
 function goBack(){
@@ -1252,8 +1274,6 @@ function goBack(){
 function goHome(){
   hideAll();
   show('home-screen');
-  var bb=document.getElementById('back-btn');
-  if(bb)bb.style.display='none';
   currentSection=null;
   updateSidebarActive('home');
 }
@@ -1335,6 +1355,7 @@ function startTest(){
 function renderQuestion(){
   var q=testQs[qIdx],total=testQs.length;
   document.getElementById('q-num-label').textContent='Question '+(qIdx+1)+' of '+total;
+  var mt=document.getElementById('q-mobile-title');if(mt)mt.textContent='Q '+(qIdx+1)+' / '+total;
   document.getElementById('q-score-label').textContent=scores.total+' correct';
   document.getElementById('q-progress-fill').style.width=((qIdx/total)*100)+'%';
   var pl={1:'Part 1 \u2014 Australia & its People',2:'Part 2 \u2014 Democratic Beliefs',3:'Part 3 \u2014 Government & Law',4:'Part 4 \u2014 Australian Values'};
